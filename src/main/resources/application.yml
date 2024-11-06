@@ -20,7 +20,7 @@ spring:
   sql:
     init:
       mode: always
-      schema-locations: "classpath:postgis_extension.sql"
+      schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
 
 travelplanner:
   gcs:
