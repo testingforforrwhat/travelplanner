@@ -20,7 +20,7 @@ INSERT INTO points_of_interest (
          "friday": {"open": "00:00", "close": "23:59"},
          "saturday": {"open": "00:00", "close": "23:59"},
          "sunday": {"open": "00:00", "close": "23:59"}}',
-       0, 4.3,
+       3, 4.3,
        '["https://example.com/hollywood1.jpg", "https://example.com/hollywood2.jpg"]'
       ),
       (1, '格里菲斯天文台', 'Griffith Observatory', '景点',
@@ -34,7 +34,7 @@ INSERT INTO points_of_interest (
          "friday": {"open": "12:00", "close": "22:00"},
          "saturday": {"open": "10:00", "close": "22:00"},
          "sunday": {"open": "10:00", "close": "22:00"}}',
-       0, 4.7,
+       4, 4.7,
        '["https://example.com/griffith1.jpg", "https://example.com/griffith2.jpg"]'
       );
 
