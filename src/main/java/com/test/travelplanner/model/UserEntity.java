@@ -20,7 +20,7 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String password;
+    private String password_hash;
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
@@ -29,10 +29,10 @@ public class UserEntity implements UserDetails {
     }
 
 
-    public UserEntity(Long id, String username, String password, UserRole role) {
+    public UserEntity(Long id, String username, String password_hash, UserRole role) {
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.password_hash = password_hash;
         this.role = role;
     }
 
@@ -45,7 +45,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return password_hash;
     }
 
 
@@ -70,13 +70,13 @@ public class UserEntity implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && role == that.role;
+        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password_hash, that.password_hash) && role == that.role;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, role);
+        return Objects.hash(id, username, password_hash, role);
     }
 
 
@@ -85,7 +85,7 @@ public class UserEntity implements UserDetails {
         return "UserEntity{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + password_hash + '\'' +
                 ", role=" + role +
                 '}';
     }

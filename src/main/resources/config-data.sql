@@ -1,6 +1,6 @@
-INSERT INTO users (username, email, password_hash, avatar_url) VALUES
-                                                                   ('john_doe', 'john@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123457', 'https://example.com/avatars/john.jpg'),
-                                                                   ('jane_smith', 'jane@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123458', 'https://example.com/avatars/jane.jpg');
+INSERT INTO users (username, email, password_hash, role, avatar_url) VALUES
+                                                                   ('john_doe', 'john@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123457', 'ROLE_GUEST', 'https://example.com/avatars/john.jpg'),
+                                                                   ('jane_smith', 'jane@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123458', 'ROLE_GUEST', 'https://example.com/avatars/jane.jpg');
 
 INSERT INTO cities (name, name_en, country, country_code, latitude, longitude, timezone, alpha_level, description, image_url) VALUES
     ('洛杉矶', 'Los Angeles', '美国', 'US', 34.0522, -118.2437, 'America/Los_Angeles', 'alpha+', '洛杉矶是美国加利福尼亚州最大的城市，以其好莱坞娱乐产业而闻名。', 'https://example.com/los_angeles.jpg');
