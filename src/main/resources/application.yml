@@ -11,7 +11,8 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      # Do not perform any DDL operations. This is the default setting, suitable for situations where Hibernate is not desired to automatically manage the database structure.
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
