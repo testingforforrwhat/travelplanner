@@ -11,7 +11,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * The @Entity annotation indicates that this class is an entity class,
+ * and during project startup, a table will be automatically generated based on this class.
+ */
 @Entity
 @Table(name = "users")
 public class UserEntity implements UserDetails {
