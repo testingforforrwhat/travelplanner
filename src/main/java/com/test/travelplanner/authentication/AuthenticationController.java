@@ -1,9 +1,9 @@
 package com.test.travelplanner.authentication;
 
 
-import com.test.travelplanner.model.LoginRequest;
-import com.test.travelplanner.model.LoginResponse;
-import com.test.travelplanner.model.RegisterRequest;
+import com.test.travelplanner.authentication.model.LoginRequest;
+import com.test.travelplanner.authentication.model.LoginResponse;
+import com.test.travelplanner.authentication.model.RegisterRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

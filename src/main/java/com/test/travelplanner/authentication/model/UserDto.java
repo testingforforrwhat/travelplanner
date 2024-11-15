@@ -1,4 +1,4 @@
-package com.test.travelplanner.model;
+package com.test.travelplanner.authentication.model;
 
 
 public record UserDto(

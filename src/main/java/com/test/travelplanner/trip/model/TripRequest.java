@@ -1,0 +1,18 @@
+//package com.test.travelplanner.model;
+//
+//
+//import java.time.LocalDate;
+//
+//
+//public record TripRequest(
+//        long userId,
+//        long cityId,
+//        String title,
+//        Integer days,
+//        String startDate,
+//        String status,
+//        String notes,
+//        LocalDate createdAt,
+//        LocalDate updatedAt
+//) {
+//}

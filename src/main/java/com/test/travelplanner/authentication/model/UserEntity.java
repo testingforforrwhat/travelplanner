@@ -1,7 +1,6 @@
-package com.test.travelplanner.model;
+package com.test.travelplanner.authentication.model;
 
 
-import com.test.travelplanner.model.UserRole;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

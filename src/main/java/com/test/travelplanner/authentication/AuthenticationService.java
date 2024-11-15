@@ -1,8 +1,8 @@
 package com.test.travelplanner.authentication;
 
 
-import com.test.travelplanner.model.UserEntity;
-import com.test.travelplanner.model.UserRole;
+import com.test.travelplanner.authentication.model.UserEntity;
+import com.test.travelplanner.authentication.model.UserRole;
 import com.test.travelplanner.repository.UserRepository;
 import com.test.travelplanner.security.JwtHandler;
 import org.springframework.security.authentication.AuthenticationManager;
