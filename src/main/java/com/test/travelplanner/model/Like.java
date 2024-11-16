@@ -3,6 +3,7 @@ package com.test.travelplanner.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user_like")
 public class Like {
 
     @Id
