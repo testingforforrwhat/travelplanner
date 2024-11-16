@@ -1,4 +1,4 @@
-package com.test.travelplanner.model;
+package com.test.travelplanner.social.model;
 
 public record CommentRequest(
         String content

@@ -1,11 +1,11 @@
 package com.test.travelplanner.social;
 
-import com.test.travelplanner.model.Comment;
-import com.test.travelplanner.model.Like;
-import com.test.travelplanner.model.CommentRequest;
-import com.test.travelplanner.model.CommentResponse;
-import com.test.travelplanner.model.LikeResponse;
-import com.test.travelplanner.model.ShareResponse;
+import com.test.travelplanner.social.model.Comment;
+import com.test.travelplanner.social.model.Like;
+import com.test.travelplanner.social.model.CommentRequest;
+import com.test.travelplanner.social.model.CommentResponse;
+import com.test.travelplanner.social.model.LikeResponse;
+import com.test.travelplanner.social.model.ShareResponse;
 import com.test.travelplanner.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

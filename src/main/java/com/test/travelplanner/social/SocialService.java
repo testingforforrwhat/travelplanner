@@ -1,7 +1,7 @@
 package com.test.travelplanner.social;
 
-import com.test.travelplanner.model.Comment;
-import com.test.travelplanner.model.Like;
+import com.test.travelplanner.social.model.Comment;
+import com.test.travelplanner.social.model.Like;
 import com.test.travelplanner.repository.CommentRepository;
 import com.test.travelplanner.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
