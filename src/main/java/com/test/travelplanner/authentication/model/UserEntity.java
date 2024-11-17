@@ -77,6 +77,14 @@ public class UserEntity implements UserDetails {
         this.role = role;
     }
 
+    public UserEntity(Long id, String username, String password_hash, UserRole role, String email) {
+        this.id = id;
+        this.username = username;
+        this.password_hash = password_hash;
+        this.role = role;
+        this.email = email;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

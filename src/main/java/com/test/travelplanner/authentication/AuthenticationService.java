@@ -34,13 +34,18 @@ public class AuthenticationService {
    }
 
 
-   public UserEntity register(String username, String password, UserRole role) throws UserAlreadyExistException {
+   public UserEntity register(String username, String password, UserRole role, String email) throws UserAlreadyExistException {
        if (userRepository.existsByUsername(username)) {
            throw new UserAlreadyExistException();
        }
 
 
-       UserEntity userEntity = new UserEntity(null, username, passwordEncoder.encode(password), role);
+       UserEntity userEntity = new UserEntity(
+               null,
+               username,
+               passwordEncoder.encode(password),
+               role,
+               email);
        return userRepository.save(userEntity);
    }
 

@@ -4,6 +4,7 @@ package com.test.travelplanner.authentication;
 import com.test.travelplanner.authentication.model.LoginRequest;
 import com.test.travelplanner.authentication.model.LoginResponse;
 import com.test.travelplanner.authentication.model.RegisterRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class AuthenticationController {
 
    @PostMapping("/register")
    @ResponseStatus(HttpStatus.CREATED)
+   @Operation(summary = "register")
    public void register(@RequestBody RegisterRequest body) {
        authenticationService.register(
                body.username(),
