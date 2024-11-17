@@ -13,8 +13,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserEntity getUserProfile(String username) {
-        return userRepository.findByUsername(username);
+    public UserEntity getUserProfile(Long id) {
+        return userRepository.findAllById(id);
     }
 
     public int updateUserProfile(String username, String email) {

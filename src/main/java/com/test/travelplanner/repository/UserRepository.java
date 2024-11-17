@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
    @Transactional
    @Query("UPDATE UserEntity u SET u.email = :email WHERE u.username = :username")
    int updateUserProfile(String username,String email);
+
+   UserEntity findAllById(Long id);
 }

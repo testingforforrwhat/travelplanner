@@ -19,7 +19,7 @@ public class UserController {
     @Operation(summary = "Get user profile", security = @SecurityRequirement(name = "bearerAuth"))
     public UserEntity getUserProfile(
             @AuthenticationPrincipal UserEntity currentUser) {
-        return userService.getUserProfile(currentUser.getUsername());
+        return userService.getUserProfile(currentUser.getId());
     }
 
     @PostMapping("/updateUserProfile")
