@@ -16,4 +16,8 @@ public class UserService {
     public UserEntity getUserProfile(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public int updateUserProfile(String username, String email) {
+        return userRepository.updateUserProfile(username,email);
+    }
 }

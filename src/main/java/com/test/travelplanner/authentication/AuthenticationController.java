@@ -24,7 +24,11 @@ public class AuthenticationController {
    @PostMapping("/register")
    @ResponseStatus(HttpStatus.CREATED)
    public void register(@RequestBody RegisterRequest body) {
-       authenticationService.register(body.username(), body.password(), body.role());
+       authenticationService.register(
+               body.username(),
+               body.password(),
+               body.role(),
+               body.email());
    }
 
 

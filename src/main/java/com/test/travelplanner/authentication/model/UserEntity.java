@@ -38,7 +38,7 @@ public class UserEntity implements UserDetails {
     @Getter
     @Size(max = 100)
     @NotNull
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email")
     private String email;
 
     @Setter
