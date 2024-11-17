@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUserProfile")
-    @Operation(summary = "update User Profile")
+    @Operation(summary = "update User Profile", security = @SecurityRequirement(name = "bearerAuth"))
     public int updateUserProfile(
             @AuthenticationPrincipal UserEntity user,
             @RequestParam String email) {
