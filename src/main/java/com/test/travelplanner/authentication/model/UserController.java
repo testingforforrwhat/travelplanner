@@ -3,6 +3,7 @@ package com.test.travelplanner.authentication.model;
 
 import com.test.travelplanner.authentication.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/profile")
-    @Operation(summary = "Get user profile")
+    @Operation(summary = "Get user profile", security = @SecurityRequirement(name = "bearerAuth"))
     public UserEntity getUserProfile(
-            @AuthenticationPrincipal UserEntity user,
-            String username) {
-        return userService.getUserProfile(username);
+            @AuthenticationPrincipal UserEntity currentUser) {
+        return userService.getUserProfile(currentUser.getUsername());
     }
 
     @PostMapping("/updateUserProfile")
