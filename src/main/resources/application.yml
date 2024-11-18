@@ -26,6 +26,11 @@ spring:
       schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
       data-locations: "classpath:config-data.sql"
 
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
 travelplanner:
   gcs:
     bucket: travelplanner-bucket-1
