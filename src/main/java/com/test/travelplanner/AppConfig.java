@@ -85,5 +85,3 @@ public class AppConfig {
         return new GeoApiContext.Builder().apiKey(apiKey).build();
     }
 }
-
-

@@ -14,31 +14,31 @@ import java.util.Date;
 
 @Component
 public class JwtHandler {
-   final Key signingKey;
+    final Key signingKey;
 
 
-   public JwtHandler(@Value("${travelplanner.jwt.secret-key}") String secretKey) {
-       byte[] bytes = Base64.getDecoder().decode(secretKey);
-       signingKey = Keys.hmacShaKeyFor(bytes);
-   }
+    public JwtHandler(@Value("${travelplanner.jwt.secret-key}") String secretKey) {
+        byte[] bytes = Base64.getDecoder().decode(secretKey);
+        signingKey = Keys.hmacShaKeyFor(bytes);
+    }
 
 
-   public String parsedUsername(String token) {
-       return Jwts.parserBuilder()
-               .setSigningKey(signingKey)
-               .build()
-               .parseClaimsJws(token)
-               .getBody()
-               .getSubject();
-   }
+    public String parsedUsername(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 
 
-   public String generateToken(String username) {
-       return Jwts.builder()
-               .setSubject(username)
-               .setIssuedAt(new Date(System.currentTimeMillis()))
-               .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-               .signWith(signingKey, SignatureAlgorithm.HS256)
-               .compact();
-   }
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .signWith(signingKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
 }

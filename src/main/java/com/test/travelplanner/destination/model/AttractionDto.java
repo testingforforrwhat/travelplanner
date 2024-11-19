@@ -7,5 +7,16 @@ public record AttractionDto(
         String openingHours,
         Double ticketPrice,
         Long destinationId
-) {}
+) {
+    public AttractionDto(AttractionEntity entity) {
+        this(
+                entity.getId(),
+                entity.getName(),
+                entity.getDescription(),
+                entity.getOpeningHours(),
+                entity.getTicketPrice(),
+                entity.getDestination().getId()
+        );
+    }
+}
 

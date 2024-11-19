@@ -10,5 +10,17 @@ public record DestinationDto(
         String imageUrl,
         Double averageRating,
         List<AttractionDto> attractions
-) {}
+) {
+    public DestinationDto(DestinationEntity entity) {
+        this(
+                entity.getId(),
+                entity.getName(),
+                entity.getLocation(),
+                entity.getDescription(),
+                entity.getImageUrl(),
+                entity.getAverageRating(),
+                entity.getAttractions().stream().map(AttractionDto::new).toList()
+        );
+    }
+}
 
