@@ -38,8 +38,15 @@ INSERT INTO points_of_interest (
        '["https://example.com/griffith1.jpg", "https://example.com/griffith2.jpg"]'
       );
 
-INSERT INTO trips (user_id, city_id, title, days, start_date, status, notes) VALUES
-    (1, 1, '洛杉矶5日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。');
+INSERT INTO destinations (name, location, description, image_url, averageRating) VALUES
+    ('Los Angeles','California, USA', 'Los Angeles is a great place', 'https://example.com/los_angeles.jpg', '4');
+
+
+INSERT INTO trips (user_id, destination_id, title, days, start_date, status, notes) VALUES
+    (1, 1, '洛杉矶5日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。'),
+    (2, 1, '洛杉矶10日游', 10, '2024-01-01', 'active', '探索洛杉矶的主要景点和文化。');
+--     (3, 1, '洛杉矶15日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。');
+
 
 INSERT INTO trip_points (
     trip_id, poi_id, day_number, visit_order, planned_arrival_time, planned_departure_time, notes

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record TripRequest(
         long userId,
-        long cityId,
+        long destinationId,
         String title,
         Integer days,
         String startDate,

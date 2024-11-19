@@ -28,8 +28,8 @@ public class TripService {
                 .toList();
     }
 
-    public void createTrip(long userId, long cityId, String title, Integer days, String startDate, String status, String notes, LocalDate createdAt, LocalDate updatedAt) {
-        tripRepository.save(new TripEntity(null, userId, cityId, title, days, startDate, status, notes, createdAt, updatedAt));
+    public void createTrip(long userId, long destinationId, String title, Integer days, String startDate, String status, String notes, LocalDate createdAt, LocalDate updatedAt) {
+        tripRepository.save(new TripEntity(null, userId, destinationId, title, days, startDate, status, notes, createdAt, updatedAt));
     }
 
 

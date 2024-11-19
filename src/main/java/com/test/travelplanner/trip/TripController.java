@@ -36,7 +36,7 @@ public class TripController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTrips(@AuthenticationPrincipal UserEntity user, @RequestBody TripRequest body) {
-        tripService.createTrip(user.getId(), body.cityId(), body.title(), body.days(), body.startDate(), body.status(), body.notes(), body.createdAt(),body.updatedAt());
+        tripService.createTrip(user.getId(), body.destinationId(), body.title(), body.days(), body.startDate(), body.status(), body.notes(), body.createdAt(),body.updatedAt());
     }
 
 
