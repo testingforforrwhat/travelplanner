@@ -45,7 +45,7 @@ INSERT INTO destinations (name, location, description, image_url, averageRating)
 INSERT INTO trips (user_id, destination_id, title, days, start_date, status, notes) VALUES
     (1, 1, '洛杉矶5日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。'),
     (2, 1, '洛杉矶10日游', 10, '2024-01-01', 'active', '探索洛杉矶的主要景点和文化。');
---     (3, 1, '洛杉矶15日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。');
+
 
 
 INSERT INTO trip_points (
