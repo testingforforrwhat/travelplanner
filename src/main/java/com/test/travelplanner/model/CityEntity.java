@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@Table(name = "cities")
+@Table(name = "cities_entity")
 public class CityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
