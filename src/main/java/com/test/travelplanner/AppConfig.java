@@ -73,11 +73,11 @@ public class AppConfig {
     }
 
 
-    @Bean
-    public Storage storage() throws IOException {
-        Credentials credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("credentials.json")));
-        return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-    }
+//        @Bean
+//        public Storage storage() throws IOException {
+//            Credentials credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("credentials.json")));
+//            return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+//        }
 
 
     @Bean

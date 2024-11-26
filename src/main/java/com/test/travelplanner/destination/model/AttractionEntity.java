@@ -23,6 +23,9 @@ public class AttractionEntity {
     @Column(name = "ticket_price")
     private Double ticketPrice;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     // Many-to-one relationship with DestinationEntity
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
@@ -32,11 +35,12 @@ public class AttractionEntity {
     public AttractionEntity() {
     }
 
-    public AttractionEntity(String name, String description, String openingHours, Double ticketPrice, DestinationEntity destination) {
+    public AttractionEntity(String name, String description, String openingHours, Double ticketPrice, String imageUrl, DestinationEntity destination) {
         this.name = name;
         this.description = description;
         this.openingHours = openingHours;
         this.ticketPrice = ticketPrice;
+        this.imageUrl = imageUrl;
         this.destination = destination;
     }
 
@@ -81,6 +85,14 @@ public class AttractionEntity {
         this.ticketPrice = ticketPrice;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public DestinationEntity getDestination() {
         return destination;
     }
@@ -114,7 +126,9 @@ public class AttractionEntity {
                 ", description='" + description + '\'' +
                 ", openingHours='" + openingHours + '\'' +
                 ", ticketPrice=" + ticketPrice +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", destinationId=" + (destination != null ? destination.getId() : null) +
                 '}';
     }
 }
+

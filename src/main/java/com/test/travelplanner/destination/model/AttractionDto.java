@@ -6,6 +6,7 @@ public record AttractionDto(
         String description,
         String openingHours,
         Double ticketPrice,
+        String imageUrl,
         Long destinationId
 ) {
     public AttractionDto(AttractionEntity entity) {
@@ -15,6 +16,7 @@ public record AttractionDto(
                 entity.getDescription(),
                 entity.getOpeningHours(),
                 entity.getTicketPrice(),
+                entity.getImageUrl(),
                 entity.getDestination().getId()
         );
     }

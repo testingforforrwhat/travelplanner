@@ -5,6 +5,7 @@ import com.test.travelplanner.destination.model.DestinationEntity;
 import com.test.travelplanner.destination.model.AttractionDto;
 import com.test.travelplanner.destination.model.AttractionEntity;
 import com.test.travelplanner.repository.DestinationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class DestinationService {
 
     private final DestinationRepository destinationRepository;
 
+    @Autowired
     public DestinationService(DestinationRepository destinationRepository) {
         this.destinationRepository = destinationRepository;
     }
@@ -69,6 +71,7 @@ public class DestinationService {
                 entity.getDescription(),
                 entity.getOpeningHours(),
                 entity.getTicketPrice(),
+                entity.getImageUrl(),
                 entity.getDestination().getId()
         );
     }
@@ -82,8 +85,30 @@ public class DestinationService {
                 dto.imageUrl(),
                 dto.averageRating()
         );
-        // You can add logic to handle attractions if necessary
+
+        // Convert attractions if present in the DTO
+        if (dto.attractions() != null) {
+            entity.setAttractions(
+                    dto.attractions().stream()
+                            .map(this::convertToEntity) // Using the AttractionDto to AttractionEntity converter
+                            .peek(attraction -> attraction.setDestination(entity)) // Set the parent destination
+                            .collect(Collectors.toList())
+            );
+        }
+
         return entity;
+    }
+
+
+    private AttractionEntity convertToEntity(AttractionDto dto) {
+        return new AttractionEntity(
+                dto.name(),
+                dto.description(),
+                dto.openingHours(),
+                dto.ticketPrice(),
+                dto.imageUrl(),
+                null  // The destination will be set later in the parent entity
+        );
     }
 
     public List<AttractionDto> getAttractionsForDestination(Long destinationId) {
