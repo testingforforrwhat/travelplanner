@@ -1,6 +1,6 @@
 package com.test.travelplanner.repository;
 
-import com.test.travelplanner.model.CityPoint;
+import com.test.travelplanner.model.entity.CityPoint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

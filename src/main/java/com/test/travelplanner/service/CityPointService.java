@@ -1,6 +1,6 @@
 package com.test.travelplanner.service;
 
-import com.test.travelplanner.model.CityPoint;
+import com.test.travelplanner.model.entity.CityPoint;
 import com.test.travelplanner.repository.CityPointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

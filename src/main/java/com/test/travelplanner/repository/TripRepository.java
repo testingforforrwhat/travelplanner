@@ -1,6 +1,6 @@
 package com.test.travelplanner.repository;
 
-import com.test.travelplanner.trip.model.TripEntity;
+import com.test.travelplanner.model.entity.TripEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

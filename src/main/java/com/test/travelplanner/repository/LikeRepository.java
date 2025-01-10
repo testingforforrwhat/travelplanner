@@ -1,6 +1,6 @@
 package com.test.travelplanner.repository;
 
-import com.test.travelplanner.social.model.Like;
+import com.test.travelplanner.model.entity.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
