@@ -30,7 +30,7 @@ public class GlobalControllerExceptionHandler {
                 // 构造自定义的错误响应对象 ErrorResponse
                 new ErrorResponse(
                         "User exist", // 错误信息，描述资源未找到
-                        "user_exist"  // 错误代码，用于标识错误类型
+                        "user_exist" + e.getMessage()  // 错误代码，用于标识错误类型
                 ),
                 HttpStatus.NOT_FOUND // 设置 HTTP 状态码为 404，表示资源未找到
         );
