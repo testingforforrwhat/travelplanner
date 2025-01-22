@@ -23,8 +23,8 @@ spring:
   sql:
     init:
       mode: always
-      schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
-      data-locations: "classpath:config-data.sql"
+      # schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
+      # data-locations: "classpath:config-data.sql"
 
 logging:
   level:
