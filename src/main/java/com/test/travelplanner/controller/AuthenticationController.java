@@ -1,6 +1,7 @@
 package com.test.travelplanner.controller;
 
 
+import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.service.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
 import com.test.travelplanner.model.LoginResponse;
@@ -26,8 +27,8 @@ public class AuthenticationController {
    @PostMapping("/register")
    @ResponseStatus(HttpStatus.CREATED)
    @Operation(summary = "register")
-   public void register(@RequestBody RegisterRequest body) {
-       authenticationService.register(
+   public UserEntity register(@RequestBody RegisterRequest body) {
+       return authenticationService.register(
                body.username(),
                body.password(),
                body.role(),
