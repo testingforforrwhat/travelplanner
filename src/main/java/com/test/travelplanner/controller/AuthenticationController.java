@@ -1,9 +1,12 @@
-package com.test.travelplanner.authentication;
+package com.test.travelplanner.controller;
 
 
+import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.service.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
 import com.test.travelplanner.model.LoginResponse;
 import com.test.travelplanner.model.RegisterRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +26,13 @@ public class AuthenticationController {
 
    @PostMapping("/register")
    @ResponseStatus(HttpStatus.CREATED)
-   public void register(@RequestBody RegisterRequest body) {
-       authenticationService.register(body.username(), body.password(), body.role());
+   @Operation(summary = "register")
+   public UserEntity register(@RequestBody RegisterRequest body) {
+       return authenticationService.register(
+               body.username(),
+               body.password(),
+               body.role(),
+               body.email());
    }
 
 

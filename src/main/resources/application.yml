@@ -1,4 +1,10 @@
+server:
+  port: 8081
+
 spring:
+  profiles:
+    # ??????? dev ???? / test ????  / prod ????
+    active: dev-secrets
   servlet:
     multipart:
       max-file-size: 10MB # File upload limit, default 1MB not enough.
@@ -12,7 +18,9 @@ spring:
   jpa:
     hibernate:
       # Do not perform any DDL operations. This is the default setting, suitable for situations where Hibernate is not desired to automatically manage the database structure.
-      ddl-auto: none
+      #      ddl-auto: none
+      #      ddl-auto: update: This will automatically update the database schema to match the entity classes when the application starts. Other options include none, create (recreate tables on each startup), and validate (verify that the table structure matches the entity classes).
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -21,8 +29,16 @@ spring:
   sql:
     init:
       mode: always
-      schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
-      data-locations: "classpath:config-data.sql"
+      # schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
+      # data-locations: "classpath:config-data.sql"
+
+logging:
+  level:
+    org.apache.coyote.http11.Http11InputBuffer: TRACE # Incoming http requests
+    org.springframework.jdbc.core: DEBUG # SQL
+    org.springframework.jdbc.datasource.init: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 travelplanner:
   gcs:
@@ -31,3 +47,8 @@ travelplanner:
     key:
   jwt:
     secret-key: 868q0lpi6O/0bTW94LCvjF4/grS8DJuvwBVLrgnLCLs=
+
+deepseek:
+  api-key: ${deepseek.api-key}
+  base-url: ${deepseek.base-url}  # DeepSeek 的 API 基础 URL
+  model: ${deepseek.model}  # 使用的模型名称

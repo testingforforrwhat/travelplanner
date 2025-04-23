@@ -20,10 +20,11 @@ configurations {
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral({ url 'https://maven.aliyun.com/repository/central' })
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3' // mybatis for database access
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -43,6 +44,11 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql' // PostgreSQL Driver
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+    implementation 'dev.langchain4j:langchain4j:0.24.0'
+    implementation 'dev.langchain4j:langchain4j-open-ai:0.24.0'
+
 }
 
 tasks.named('test') {

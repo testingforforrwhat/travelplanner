@@ -1,6 +1,6 @@
 INSERT INTO users (username, email, password_hash, role, avatar_url) VALUES
-                                                                   ('john_doe', 'john@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123457', 'ROLE_GUEST', 'https://example.com/avatars/john.jpg'),
-                                                                   ('jane_smith', 'jane@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123458', 'ROLE_GUEST', 'https://example.com/avatars/jane.jpg');
+                                                                         ('john_doe', 'john@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123457', 'ROLE_GUEST', 'https://example.com/avatars/john.jpg'),
+                                                                         ('jane_smith', 'jane@example.com', '$2a$10$abcdefghijklmnopqrstuvwxyz123458', 'ROLE_GUEST', 'https://example.com/avatars/jane.jpg');
 
 INSERT INTO cities (name, name_en, country, country_code, latitude, longitude, timezone, alpha_level, description, image_url) VALUES
     ('洛杉矶', 'Los Angeles', '美国', 'US', 34.0522, -118.2437, 'America/Los_Angeles', 'alpha+', '洛杉矶是美国加利福尼亚州最大的城市，以其好莱坞娱乐产业而闻名。', 'https://example.com/los_angeles.jpg');
@@ -38,8 +38,15 @@ INSERT INTO points_of_interest (
        '["https://example.com/griffith1.jpg", "https://example.com/griffith2.jpg"]'
       );
 
-INSERT INTO trips (user_id, city_id, title, days, start_date, status, notes) VALUES
-    (1, 1, '洛杉矶5日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。');
+INSERT INTO destinations (name, location, description, image_url, averageRating) VALUES
+    ('Los Angeles','California, USA', 'Los Angeles is a great place', 'https://example.com/los_angeles.jpg', '4');
+
+
+INSERT INTO trips (user_id, destination_id, title, days, start_date, status, notes) VALUES
+    (1, 1, '洛杉矶5日游', 5, '2024-05-01', 'active', '探索洛杉矶的主要景点和文化。'),
+    (2, 1, '洛杉矶10日游', 10, '2024-01-01', 'active', '探索洛杉矶的主要景点和文化。');
+
+
 
 INSERT INTO trip_points (
     trip_id, poi_id, day_number, visit_order, planned_arrival_time, planned_departure_time, notes

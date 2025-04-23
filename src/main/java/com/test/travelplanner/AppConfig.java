@@ -38,9 +38,7 @@ public class AppConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                                .requestMatchers("/bookings/**").hasAuthority("ROLE_GUEST")
-                                .requestMatchers("/listings/search").hasAuthority("ROLE_GUEST")
-                                .requestMatchers("/listings/**").hasAuthority("ROLE_HOST")
+                                .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement()
@@ -75,11 +73,11 @@ public class AppConfig {
     }
 
 
-    @Bean
-    public Storage storage() throws IOException {
-        Credentials credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("credentials.json")));
-        return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-    }
+//        @Bean
+//        public Storage storage() throws IOException {
+//            Credentials credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("credentials.json")));
+//            return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+//        }
 
 
     @Bean
@@ -87,5 +85,3 @@ public class AppConfig {
         return new GeoApiContext.Builder().apiKey(apiKey).build();
     }
 }
-
-

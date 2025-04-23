@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS cities CASCADE;
+DROP TABLE IF EXISTS destinations CASCADE;
 DROP TABLE IF EXISTS points_of_interest CASCADE;
 DROP TABLE IF EXISTS trips CASCADE;
 DROP TABLE IF EXISTS trip_points;
@@ -100,11 +101,27 @@ COMMENT ON COLUMN points_of_interest.price_level IS '价格等级（1-5）';
 COMMENT ON COLUMN points_of_interest.rating IS '评分（0-5）';
 COMMENT ON COLUMN points_of_interest.image_urls IS '景点图片URL列表';
 
+CREATE TABLE destinations (
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(100) NOT NULL,
+                        location VARCHAR(100) NOT NULL,
+                        description TEXT,
+                        image_url VARCHAR(255),
+                        averageRating DECIMAL(2,1) CHECK (averageRating BETWEEN 0 AND 5)
+);
+
+COMMENT ON TABLE destinations IS '目的地信息表';
+COMMENT ON COLUMN destinations.id IS '目的地ID';
+COMMENT ON COLUMN destinations.name IS '目的地名称';
+COMMENT ON COLUMN destinations.location IS '目的地位置';
+COMMENT ON COLUMN destinations.description IS '目的地描述';
+COMMENT ON COLUMN destinations.image_url IS '目的地图片URL';
+COMMENT ON COLUMN destinations.averageRating IS '目的地评分';
 
 CREATE TABLE trips (
                        id SERIAL PRIMARY KEY,
                        user_id INTEGER REFERENCES users(id),
-                       city_id INTEGER REFERENCES cities(id),
+                       destination_id INTEGER REFERENCES destinations(id),
                        title VARCHAR(100) NOT NULL,
                        days INTEGER NOT NULL CHECK (days BETWEEN 1 AND 15),
                        start_date DATE NOT NULL,
@@ -117,7 +134,7 @@ CREATE TABLE trips (
 COMMENT ON TABLE trips IS '行程表';
 COMMENT ON COLUMN trips.id IS '行程ID';
 COMMENT ON COLUMN trips.user_id IS '用户ID';
-COMMENT ON COLUMN trips.city_id IS '目的地城市ID';
+COMMENT ON COLUMN trips.destination_id IS '目的地城市ID';
 COMMENT ON COLUMN trips.title IS '行程标题';
 COMMENT ON COLUMN trips.days IS '行程天数';
 COMMENT ON COLUMN trips.start_date IS '开始日期';

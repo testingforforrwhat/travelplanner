@@ -1,8 +1,9 @@
-package com.test.travelplanner.authentication;
+package com.test.travelplanner.service;
 
 
-import com.test.travelplanner.model.UserEntity;
-import com.test.travelplanner.model.UserRole;
+import com.test.travelplanner.authentication.UserAlreadyExistException;
+import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.UserRole;
 import com.test.travelplanner.repository.UserRepository;
 import com.test.travelplanner.security.JwtHandler;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,13 +35,18 @@ public class AuthenticationService {
    }
 
 
-   public UserEntity register(String username, String password, UserRole role) throws UserAlreadyExistException {
+   public UserEntity register(String username, String password, UserRole role, String email) throws UserAlreadyExistException {
        if (userRepository.existsByUsername(username)) {
            throw new UserAlreadyExistException();
        }
 
 
-       UserEntity userEntity = new UserEntity(null, username, passwordEncoder.encode(password), role);
+       UserEntity userEntity = new UserEntity(
+               null,
+               username,
+               passwordEncoder.encode(password),
+               role,
+               email);
        return userRepository.save(userEntity);
    }
 

@@ -1,5 +1,8 @@
-package com.test.travelplanner.model;
+package com.test.travelplanner.model.dto;
 
+
+import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.UserRole;
 
 public record UserDto(
        Long id,
