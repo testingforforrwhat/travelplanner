@@ -13,6 +13,7 @@ COPY settings.gradle .
 COPY src src
 
 # 构建 jar 包，x test 可选跳过单元测试，加快速度
+#  Dockerfile 集成 ./gradlew clean build 自动打包 Spring Boot 项目
 RUN ./gradlew clean build -x test
 
 # -------- 第二阶段：用 JRE 极简运行 --------
