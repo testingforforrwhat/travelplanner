@@ -4,6 +4,22 @@ version: '3.8'
 services:
 
   backend:
+    # 如果 Spring Boot、vuecli等 镜像已用 bootBuildImage、dockerfile等 生成，可以省略 build，image 名即上一步build的名称。
+    # 不写 build: 字段，否则本地会重新 build 镜像。
+    # docker-compose up 会自动判断本地无此镜像时，从远程仓库下载。
+    # 镜像名必须和 build/push 时一致。
+    #
+    # 只要 build 字段存在，compose 会优先用本地源码和Dockerfile重新构建出镜像，而不是去远程仓库拉镜像。
+    # 一般线上/生产，只写 image 字段，保证镜像一致性和拉取提升速度。开发测试、需要自定义镜像时才用 build 字段。
+    #
+    # 最佳实践
+    # - 使用远程稳定镜像：对于 ElasticSearch、Redis、MySQL 等基础服务，直接用 image: 指定官方镜像
+    # - 开发中的应用：如果频繁修改代码，使用 build: 方便开发调试
+    # - CI/CD 管道中：构建一次镜像，推送到私有仓库，然后在生产环境只使用 image: 拉取
+    build: # 表示要用 Dockerfile 自动构建镜像。
+      # 就是让 Docker 从 vuecli-app (前端项目根目录) 目录下查找 Dockerfile 并把这个目录及内容作为构建所需文件传给 Docker 引擎。
+      # 这样就可以 COPY . . 把代码复制进镜像里。
+      context: ../travelplanner
     image: ccr.ccs.tencentyun.com/travelplanner/springboot-app-travelplanner-image:latest
     user: root  # 临时使用 root 用户运行（仅开发环境，生产不推荐）
     depends_on:
@@ -37,7 +53,7 @@ services:
   db:
     image: ghcr.io/baosystems/postgis:latest
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: travelplanner
       POSTGRES_PASSWORD: secret
       TZ: UTC
     volumes:
