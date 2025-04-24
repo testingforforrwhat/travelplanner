@@ -18,6 +18,13 @@ COPY src src
 
 # 构建 jar 包，x test 可选跳过单元测试，加快速度
 #  Dockerfile 集成 ./gradlew clean build 自动打包 Spring Boot 项目; 适合 CI/CD，代码更新后即可自动打jar并部署。
+
+#15 [builder 8/8] RUN ./gradlew clean build -x test
+#15 0.331 /bin/sh: 1: ./gradlew: Permission denied
+#15 ERROR: process "/bin/sh -c ./gradlew clean build -x test" did not complete
+
+# 添加这行，确保 gradlew 可执行
+RUN chmod +x gradlew 
 RUN ./gradlew clean build -x test
 
 # -------- 第二阶段：用 JRE 极简运行 --------
