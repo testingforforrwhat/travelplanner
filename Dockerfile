@@ -23,7 +23,7 @@ WORKDIR /app
 # 只拷贝最终的 jar 包进来
 COPY --from=builder /build/build/libs/*.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
 # JVM 连接 PostgreSQL：只要 build.gradle 已引入 postgresql 驱动，无需单独写
 # 启动命令如需外部参数可参考参数化写法
