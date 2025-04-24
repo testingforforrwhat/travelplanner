@@ -19,6 +19,16 @@ configurations {
     }
 }
 
+// tencentcloud
+//
+// repositories {
+//     mavenCentral({ url 'https://maven.aliyun.com/repository/central' })
+// }
+//
+// #16 [builder 9/9] RUN ./gradlew clean build -x test
+// #16 0.586 Downloading https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
+// #16 2.859
+// #16 2.859 Exception in thread "main" java.net.SocketException: Connection reset
 repositories {
     maven {
         url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/'
