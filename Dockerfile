@@ -1,3 +1,7 @@
+
+# Dockerfile 集成 ./gradlew clean build 自动构建 JAR，就需要用到 多阶段构建（multi-stage build）。
+# 这样你可以不用在本地 ./gradlew clean build  先手动构建 jar，让 Docker 构建流程从拉代码到打包、运行“一步到位”。 适合 CI/CD 流水线或无需提前手动构建的场景。
+
 # -------- 第一阶段：用 JDK 构建 jar --------
 FROM eclipse-temurin:17-jdk-jammy AS builder
 
@@ -13,7 +17,7 @@ COPY settings.gradle .
 COPY src src
 
 # 构建 jar 包，x test 可选跳过单元测试，加快速度
-#  Dockerfile 集成 ./gradlew clean build 自动打包 Spring Boot 项目
+#  Dockerfile 集成 ./gradlew clean build 自动打包 Spring Boot 项目; 适合 CI/CD，代码更新后即可自动打jar并部署。
 RUN ./gradlew clean build -x test
 
 # -------- 第二阶段：用 JRE 极简运行 --------
