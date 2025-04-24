@@ -3,6 +3,36 @@ version: '3.8'
 
 services:
 
+  backend:
+    image: ccr.ccs.tencentyun.com/travelplanner/springboot-app-travelplanner-image:latest
+    user: root  # 临时使用 root 用户运行（仅开发环境，生产不推荐）
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    # Spring Boot 的配置优先级大致如下（高→低）,高优先级覆盖低优先级：
+    # - 命令行参数
+    # - 环境变量
+    # - application.yml 或 application.properties
+    # - 代码中的默认值等
+    #
+    # 所以你在 docker-compose.yml 写的
+    # environment:
+    #   SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/testdb
+    # 等价于设置了环境变量，只会覆盖这几个指定的项，不会影响 application.yml 里其它没有覆盖的配置。
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/travelplanner
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+      # java.nio.file.AccessDeniedException: /workspace/uploads, 这表示 容器内的 /workspace/uploads 目录没有写权限或者当前用户没有权限访问该目录。
+      # 你的配置，uploads 实际就是 /workspace/uploads。只需保证这个目录存在且有写权限，并用 volumes 把主机持久化目录映射到这里，问题即可解决。
+      # 使用 bootBuildImage 或 Maven/Gradle 的 spring-boot:build-image 任务时，生成的镜像默认使用非 root 用户 (通常是 UID 1000) 运行应用，导致无法写入 /workspace/uploads 目录。
+      #  - 方法一: user: root  # 临时使用 root 用户运行（仅开发环境，生产不推荐）
+      #  - 方法二: 修改 Dockerfile，确保目录存在并有正确权限
+      #  - 方法三: 使用 volumes 挂载本地目录（并授权）
+      FILE_UPLOAD_DIR: uploads
+    networks:
+      - app-travelplanner-network
 
   db:
     image: ghcr.io/baosystems/postgis:latest
@@ -14,7 +44,21 @@ services:
       - travelplanner-pg-local:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - app-travelplanner-network
 
+# 如果你不显式定义网络，Docker Compose 会自动为所有服务创建一个默认的桥接网络（bridge）。
+# 自定义网络：通过 networks 配置，你可以创建一个自定义的桥接网络，并将服务连接到该网络
+#
+# 每个服务都连接到 app-network 自定义网络。
+# 容器可以通过服务名（如 db）互相通信，而不需要使用 IP 地址
+#
+# docker network ls  // 查看 Docker 网络
+# docker network inspect app-network  // 查看 app-network 的所有容器
+networks:
+  app-travelplanner-network:
+    driver: bridge
 
+# permanent storage of data.
 volumes:
   travelplanner-pg-local:
