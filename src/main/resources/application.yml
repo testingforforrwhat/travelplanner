@@ -48,6 +48,8 @@ travelplanner:
   jwt:
     secret-key: 868q0lpi6O/0bTW94LCvjF4/grS8DJuvwBVLrgnLCLs=
 
+# https://platform.deepseek.com/
+# https://api-docs.deepseek.com/zh-cn/
 deepseek:
   api-key: ${deepseek.api-key}
   base-url: ${deepseek.base-url}  # DeepSeek 的 API 基础 URL
