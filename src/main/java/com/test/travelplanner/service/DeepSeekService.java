@@ -9,8 +9,17 @@ import org.springframework.stereotype.Service;
 @Service  
 public class DeepSeekService {  
 
-    private final ChatLanguageModel chatModel;  
+    private final ChatLanguageModel chatModel;
 
+    /**
+     *
+     * 通过构造函数注入配置参数，然后基于（类似 OpenAI SDK 的）OpenAiChatModel / ChatLanguageModel
+     * 构建 DeepSeekService 类AI服务的封装 Service，例如用于与 DeepSeek 的接口通信。
+     *
+     * @param apiKey
+     * @param baseUrl
+     * @param model
+     */
     public DeepSeekService(  
             @Value("${deepseek.api-key}") String apiKey,  
             @Value("${deepseek.base-url}") String baseUrl,  
