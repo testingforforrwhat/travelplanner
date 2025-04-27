@@ -14,7 +14,7 @@ public class DeepSeekService {
     /**
      *
      * Spring Boot参数注入+Builder模式初始化AI模型服务实例
-     * 
+     *
      * 通过构造函数注入配置参数，然后基于（类似 OpenAI SDK 的）OpenAiChatModel / ChatLanguageModel
      * 构建 DeepSeekService 类AI服务的封装 Service，例如用于与 DeepSeek 的接口通信。
      *
@@ -48,8 +48,11 @@ public class DeepSeekService {
                 .baseUrl(baseUrl)  
                 .modelName(model)  
                 .build();  
-    }  
+    }
 
+    /**
+     * 发送聊天消息获取回复
+     */
     public String chat(String message) {  
         return chatModel.generate(message);  
     }  
