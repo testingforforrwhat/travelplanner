@@ -16,6 +16,22 @@ public class DeepSeekService {
      * 通过构造函数注入配置参数，然后基于（类似 OpenAI SDK 的）OpenAiChatModel / ChatLanguageModel
      * 构建 DeepSeekService 类AI服务的封装 Service，例如用于与 DeepSeek 的接口通信。
      *
+     *
+     * 如果你的配置较多，更符合 Spring 推荐风格的做法是用 @ConfigurationProperties 批量注入：
+     *
+     * ```java
+     * @Component
+     * @ConfigurationProperties(prefix = "deepseek")
+     * @Data
+     * public class DeepSeekProperties {
+     *     private String apiKey;
+     *     private String baseUrl;
+     *     private String model;
+     * }
+     * ```
+     * 
+     * 然后在 Service 里@Autowired 注入 DeepSeekProperties，更加优雅、可维护。
+     *
      * @param apiKey
      * @param baseUrl
      * @param model
