@@ -55,3 +55,6 @@ deepseek:
   base-url: ${deepseek.base-url}  # DeepSeek 的 API 基础 URL
   model: ${deepseek.model}  # 使用的模型名称
   stream: ${deepseek.stream}  # # 开启流式输出
+
+tencent:
+  api-key: ${weather.api-key}
