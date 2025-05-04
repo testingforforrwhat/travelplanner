@@ -20,11 +20,13 @@ public class WeatherController {
 
     public WeatherController() {  
         this.webClient = WebClient.create();  
-    }  
+    }
 
+    // 这是 Spring Boot Controller 用于开启 Server-Sent Events（SSE）流的标准方式。
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)  
     public SseEmitter streamWeather(@RequestParam String city) {
-        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);  // 长超时  
+        // 设置SSE超时时间
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);  // 长超时
         
         // 异步执行，避免阻塞主线程  
         new Thread(() -> {  
