@@ -8,6 +8,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/weather")  
@@ -62,15 +65,15 @@ public class WeatherController {
      * > 其中 OkHttp 和 WebClient 用于主流第三方HTTP接口（RESTful或SSE）最方便。
      *
      *
-     * @param city
+     * @param cityLocation
      * @param emitter
      * @throws Exception
      */
-    private void fetchAndSendWeather(String city, SseEmitter emitter) throws Exception {  
+    private void fetchAndSendWeather(String cityLocation, SseEmitter emitter) throws Exception {
         // 这里替换为实际的天气API，下面用的是示例  
         String apiUrl = "https://apis.map.qq.com/ws/weather/v1/?" +
                 "key=" + apiKey + "&" +
-                "location=" + city + "&" +
+                "location=" + URLEncoder.encode(cityLocation, StandardCharsets.UTF_8) + "&" +
                 "type=future&" +
                 "output=json&" +
                 "get_md=0";
