@@ -25,7 +25,25 @@ public class WeatherController {
         this.webClient = WebClient.create();  
     }
 
-    // 这是 Spring Boot Controller 用于开启 Server-Sent Events（SSE）流的标准方式。
+
+    /**
+     *
+     *
+     * 这是 Spring Boot Controller 用于开启 Server-Sent Events（SSE）流的标准方式。
+     *
+     *
+     * SSE：
+     *
+     * 服务器主动推送：减少无效请求
+     * 更低的延迟：数据更新可立即推送给客户端
+     * 自动重连：浏览器原生支持断线重连
+     * 协议简单：比WebSocket更轻量
+     * HTTP兼容：可通过现有HTTP基础设施工作
+     *
+     * 
+     * @param city
+     * @return
+     */
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)  
     public SseEmitter streamWeather(@RequestParam String city) {
         // 设置SSE超时时间
@@ -34,7 +52,9 @@ public class WeatherController {
         // 异步执行，避免阻塞主线程  
         new Thread(() -> {  
             try {  
-                // 初始发送一次数据  
+                // TODO
+
+                // 初始发送一次数据
                 fetchAndSendWeather(city, emitter);  
                 
                 // 每30秒调用一次天气API（模拟实时更新）  
