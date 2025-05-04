@@ -37,10 +37,10 @@ public class WeatherController {
      * 服务器主动推送：减少无效请求
      * 更低的延迟：数据更新可立即推送给客户端
      * 自动重连：浏览器原生支持断线重连
-     * 协议简单：比WebSocket更轻量
+     * 协议简单：相对于WebSocket更轻量
      * HTTP兼容：可通过现有HTTP基础设施工作
      *
-     * 
+     *
      * @param city
      * @return
      */
