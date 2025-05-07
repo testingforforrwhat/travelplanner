@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -52,15 +53,20 @@ public class WeatherController {
         // 异步执行，避免阻塞主线程  
         new Thread(() -> {  
             try {  
-                // TODO
+                // TODO: city to get cityLocation
+                // 城市编码查询
+                String adcode = getCityCode(city);
+                if (adcode == null) {
+                    adcode = "110000"; // 默认北京
+                }
 
                 // 初始发送一次数据
-                fetchAndSendWeather(city, emitter);  
+                fetchAndSendWeather(adcode, emitter);
                 
                 // 每30秒调用一次天气API（模拟实时更新）  
                 for (int i = 0; i < 20; i++) {  // 限制20次，避免无限循环  
                     Thread.sleep(30000); // 30秒  
-                    fetchAndSendWeather(city, emitter);  
+                    fetchAndSendWeather(adcode, emitter);
                 }  
                 
                 emitter.complete();  
@@ -70,6 +76,20 @@ public class WeatherController {
         }).start();  
         
         return emitter;  
+    }
+
+    /**
+     * 城市名转adcode (实际中可以缓存城市编码数据)
+     */
+    private String getCityCode(String cityName) {
+        // 调用地图地理编码API，这里简化为静态映射
+        Map<String, String> cityCodeMap = Map.of(
+                "北京", "110000",
+                "上海", "310000",
+                "保定", "130600",
+                "涿州", "130681"
+        );
+        return cityCodeMap.getOrDefault(cityName, null);
     }
 
     /**
@@ -93,7 +113,8 @@ public class WeatherController {
         // 这里替换为实际的天气API，下面用的是示例  
         String apiUrl = "https://apis.map.qq.com/ws/weather/v1/?" +
                 "key=" + apiKey + "&" +
-                "location=" + URLEncoder.encode(cityLocation, StandardCharsets.UTF_8) + "&" +
+                "adcode=" + cityLocation + "&" +
+//                "location=" + URLEncoder.encode(cityLocation, StandardCharsets.UTF_8) + "&" +
                 "type=future&" +
                 "output=json&" +
                 "get_md=0";
