@@ -70,6 +70,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'  // 文件处理工具
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'  // 用于WebClient
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.42'
 
 }
 
