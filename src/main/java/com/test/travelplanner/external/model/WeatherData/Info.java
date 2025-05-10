@@ -1,4 +1,4 @@
-package com.test.travelplanner.external.model;
+package com.test.travelplanner.external.model.WeatherData;
 
 import lombok.Data;
 

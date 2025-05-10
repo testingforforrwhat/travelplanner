@@ -1,7 +1,6 @@
-package com.test.travelplanner.external.model;
+package com.test.travelplanner.external.model.WeatherData;
 
 import lombok.Data;
-import java.util.List;  
 
 @Data  
 public class WeatherData {  

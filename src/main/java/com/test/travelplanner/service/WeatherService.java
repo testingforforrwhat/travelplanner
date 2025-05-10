@@ -1,10 +1,9 @@
 package com.test.travelplanner.service;
 
 import com.alibaba.fastjson2.JSON;
-import com.test.travelplanner.external.model.DayNightDetail;
-import com.test.travelplanner.external.model.Forecast;
-import com.test.travelplanner.external.model.Info;
-import com.test.travelplanner.external.model.WeatherData;
+import com.test.travelplanner.external.model.WeatherData.DayNightDetail;
+import com.test.travelplanner.external.model.WeatherData.Info;
+import com.test.travelplanner.external.model.WeatherData.WeatherData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
