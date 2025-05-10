@@ -109,18 +109,18 @@ public class WeatherService {
         
         // 当前天气信息  
         Map<String, Object> current = new HashMap<>();  
-        current.put("temp_c", parseInteger(today.get("daytemp")));
-        current.put("humidity", parseInteger(today.get("dayhumidity")));
-        current.put("wind_kph", 10); // 高德API没有直接提供风速，这里给个固定值  
-        current.put("wind_dir", today.get("daywind"));
+        current.put("temp_c", parseInteger(today.getTemperature()));
+        current.put("humidity", parseInteger(today.getHumidity()));
+        current.put("wind_kph", today.getWind_power()); // 高德API没有直接提供风速，这里给个固定值
+        current.put("wind_dir", today.getWind_direction());
         current.put("pressure_mb", 1012); // 高德API没有气压，给个固定值  
-        current.put("feelslike_c", parseInteger(today.get("daytemp")) - 2); // 高德没有体感温度
+        current.put("feelslike_c", parseInteger(today.getTemperature()) - 2); // 高德没有体感温度
         current.put("uv", 3); // 高德API没有UV指数，给个固定值  
         
         // 天气状况  
         Map<String, Object> condition = new HashMap<>();  
-        condition.put("text", today.get("dayweather"));  
-        condition.put("icon", getWeatherIcon((String) today.get("dayweather")));  
+        condition.put("text", today.getWeather());
+        condition.put("icon", getWeatherIcon(today.getWeather()));
         current.put("condition", condition);  
         
         result.put("current", current);  
