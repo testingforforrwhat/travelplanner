@@ -124,10 +124,15 @@ public class WeatherController {
          *
          *
          */
-        Map<String, Object> weatherData = webClient.get()
+//        Map<String, Object> weatherData = webClient.get()
+//                .uri(apiUrl)
+//                .retrieve()
+//                .bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+//                .block();  // 在异步线程中，可以使用阻塞方式
+        String weatherData = webClient.get()
                 .uri(apiUrl)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+                .bodyToMono(String.class)
                 .block();  // 在异步线程中，可以使用阻塞方式
         log.info(" ==> weatherData: {}", weatherData);
 
