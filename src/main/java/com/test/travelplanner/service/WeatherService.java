@@ -1,5 +1,10 @@
 package com.test.travelplanner.service;
 
+import com.alibaba.fastjson2.JSON;
+import com.test.travelplanner.external.model.DayNightDetail;
+import com.test.travelplanner.external.model.Forecast;
+import com.test.travelplanner.external.model.Info;
+import com.test.travelplanner.external.model.WeatherData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -60,52 +65,56 @@ public class WeatherService {
     /**  
      * 转换高德天气数据为前端所需格式  
      */  
-    public Map<String, Object> convertToClientFormat(Map<String, Object> amapData) {
+    public Map<String, Object> convertToClientFormat(String amapData) {
         Map<String, Object> result = new HashMap<>();
 
         log.info(" ==> amapData: {}", amapData);
 
+        WeatherData weatherData = JSON.parseObject(amapData, WeatherData.class);
+
         // 先判断数据有效性
         // amapData.get("status") 单独使用是一个对象，不是布尔值，不能作为条件表达式
-        if (!"0".equals(String.valueOf(amapData.get("status")))) {
+        if (!"0".equals(String.valueOf(weatherData.getStatus()))) {
             // 处理错误情况  
             result.put("error", "无法获取天气数据");
             return result;
         }
 
-        Map<String, Object> resultData = (Map<String, Object>)amapData.get("result");
-        List<Map<String, Object>> forecasts = (List<Map<String, Object>>) resultData.get("result");
-        if (forecasts.isEmpty()) {  
+//        Map<String, Object> resultData = (Map<String, Object>)amapData.get("result");
+//        List<Map<String, Object>> forecasts = (List<Map<String, Object>>) resultData.get("result");
+        if (weatherData.getResult().getForecast().isEmpty()) {
             result.put("error", "无天气数据");  
             return result;  
         }  
         
-        Map<String, Object> forecastData = forecasts.get(0);  
-        List<Map<String, Object>> infos = (List<Map<String, Object>>) forecastData.get("casts");  
-        
-        if (infos == null || infos.isEmpty()) {  
+//        Map<String, Object> forecastData = forecasts.get(0);
+//        List<Map<String, Object>> infos = (List<Map<String, Object>>) forecastData.get("casts");
+
+        Info infos = weatherData.getResult().getForecast().get(0).getInfos().get(0);
+        if (infos == null) {
             result.put("error", "无天气数据");  
             return result;  
         }  
         
         // 当前天气数据（使用第一天数据）  
-        Map<String, Object> today = infos.get(0);  
-        
+        // Map<String, Object> today = infos.get(0);
+        DayNightDetail today = infos.getDay();
+
         // 位置信息  
         Map<String, Object> location = new HashMap<>();  
-        location.put("name", forecastData.get("city"));  
+        location.put("name", weatherData.getResult().getForecast().get(0).getCity());
         location.put("country", "中国");  
-        location.put("province", forecastData.get("province"));  
+        location.put("province", weatherData.getResult().getForecast().get(0).getProvince());
         result.put("location", location);  
         
         // 当前天气信息  
         Map<String, Object> current = new HashMap<>();  
-        current.put("temp_c", parseInteger(today.get("daytemp")));  
-        current.put("humidity", parseInteger(today.get("dayhumidity")));  
+        current.put("temp_c", parseInteger(today.get("daytemp")));
+        current.put("humidity", parseInteger(today.get("dayhumidity")));
         current.put("wind_kph", 10); // 高德API没有直接提供风速，这里给个固定值  
-        current.put("wind_dir", today.get("daywind"));  
+        current.put("wind_dir", today.get("daywind"));
         current.put("pressure_mb", 1012); // 高德API没有气压，给个固定值  
-        current.put("feelslike_c", parseInteger(today.get("daytemp")) - 2); // 高德没有体感温度  
+        current.put("feelslike_c", parseInteger(today.get("daytemp")) - 2); // 高德没有体感温度
         current.put("uv", 3); // 高德API没有UV指数，给个固定值  
         
         // 天气状况  
