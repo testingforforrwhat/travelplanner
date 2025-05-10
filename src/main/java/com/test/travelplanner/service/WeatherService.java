@@ -65,7 +65,8 @@ public class WeatherService {
 
         log.info(" ==> amapData: {}", amapData);
 
-        if (!"0".equals(amapData.get("status")) || amapData.get("forecasts") == null) {
+        // amapData.get("status") 单独使用是一个对象，不是布尔值，不能作为条件表达式
+        if (!"0".equals(String.valueOf(amapData.get("status")))) {
             // 处理错误情况  
             result.put("error", "无法获取天气数据");  
             return result;  
