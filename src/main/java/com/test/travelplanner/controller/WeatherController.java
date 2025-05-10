@@ -1,7 +1,9 @@
 package com.test.travelplanner.controller;
 
+import com.test.travelplanner.service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;  
 import org.springframework.web.client.RestTemplate;  
@@ -15,14 +17,16 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/weather")  
-public class WeatherController {  
+public class WeatherController {
 
+    private final WeatherService weatherService;
     private final WebClient webClient;
 
     @Value("${tencent.api-key}")
     private String apiKey;
 
-    public WeatherController() {  
+    public WeatherController(WeatherService weatherService) {
+        this.weatherService = weatherService;
         this.webClient = WebClient.create();  
     }
 
@@ -55,7 +59,7 @@ public class WeatherController {
             try {  
                 // TODO: city to get cityLocation
                 // 城市编码查询
-                String adcode = getCityCode(city);
+                String adcode = weatherService.getCityCode(city);
                 if (adcode == null) {
                     adcode = "110000"; // 默认北京
                 }
@@ -78,19 +82,6 @@ public class WeatherController {
         return emitter;  
     }
 
-    /**
-     * 城市名转adcode (实际中可以缓存城市编码数据)
-     */
-    private String getCityCode(String cityName) {
-        // 调用地图地理编码API，这里简化为静态映射
-        Map<String, String> cityCodeMap = Map.of(
-                "北京", "110000",
-                "上海", "310000",
-                "保定", "130600",
-                "涿州", "130681"
-        );
-        return cityCodeMap.getOrDefault(cityName, null);
-    }
 
     /**
      *
@@ -118,18 +109,36 @@ public class WeatherController {
                 "type=future&" +
                 "output=json&" +
                 "get_md=0";
-        
-        // 调用第三方天气API  
-        String weatherData = webClient.get()  
-                .uri(apiUrl)  
-                .retrieve()  
-                .bodyToMono(String.class)  
-                .block();  // 在异步线程中，可以使用阻塞方式  
+
+        /**
+         *
+         * 调用第三方天气API, // 获取天气数据
+         *
+         * 通过WebClient调用了HTTP接口，接口返回的数据直接用String.class接收。
+         * weatherData 的数据类型就是 String，内容是一整段 JSON 或纯文本。
+         * 你只是得到了原始响应的字符串文本，并没有映射为Java对象。
+         *
+         * 通过WebClient调用了HTTP接口，接口返回的数据直接用new ParameterizedTypeReference<Map<String,Object>>()接收。
+         * weatherData 的数据类型就是 new ParameterizedTypeReference<Map<String,Object>>()，内容是 object。
+         * 你得到响应映射为Java对象。
+         *
+         *
+         */
+        Map<String, Object> weatherData = webClient.get()
+                .uri(apiUrl)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+                .block();  // 在异步线程中，可以使用阻塞方式
         log.info(" ==> weatherData: {}", weatherData);
+
+        assert weatherData != null;
+        // 转换为前端需要的格式
+        Map<String, Object> convertToClientFormatWeatherData = weatherService.convertToClientFormat(weatherData);
+        log.info(" ==> convertToClientFormatWeatherData: {}", convertToClientFormatWeatherData);
 
         // 发送数据到客户端  
         emitter.send(SseEmitter.event()  
                 .name("weather-update")  
-                .data(weatherData, MediaType.APPLICATION_JSON));  
+                .data(convertToClientFormatWeatherData, MediaType.APPLICATION_JSON));
     }  
 }  
