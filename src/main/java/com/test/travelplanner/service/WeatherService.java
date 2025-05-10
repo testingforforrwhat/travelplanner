@@ -142,15 +142,15 @@ public class WeatherService {
      */  
     private String getWeatherIcon(String weather) {  
         Map<String, String> iconMap = Map.of(  
-            "晴", "https://cdn.weatherapi.com/weather/64x64/day/113.png",  
+            "晴天", "https://cdn.weatherapi.com/weather/64x64/day/113.png",
             "多云", "https://cdn.weatherapi.com/weather/64x64/day/116.png",  
-            "阴", "https://cdn.weatherapi.com/weather/64x64/day/119.png",  
+            "阴天", "https://cdn.weatherapi.com/weather/64x64/day/119.png",
             "小雨", "https://cdn.weatherapi.com/weather/64x64/day/296.png",  
             "中雨", "https://cdn.weatherapi.com/weather/64x64/day/302.png",  
             "大雨", "https://cdn.weatherapi.com/weather/64x64/day/308.png",  
             "雷阵雨", "https://cdn.weatherapi.com/weather/64x64/day/200.png",  
             "阵雨", "https://cdn.weatherapi.com/weather/64x64/day/176.png",  
-            "雪", "https://cdn.weatherapi.com/weather/64x64/day/338.png"  
+            "雪天", "https://cdn.weatherapi.com/weather/64x64/day/338.png"
         );  
         return iconMap.getOrDefault(weather, "https://cdn.weatherapi.com/weather/64x64/day/116.png");  
     }  
