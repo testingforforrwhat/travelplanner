@@ -69,11 +69,12 @@ public class WeatherService {
         // amapData.get("status") 单独使用是一个对象，不是布尔值，不能作为条件表达式
         if (!"0".equals(String.valueOf(amapData.get("status")))) {
             // 处理错误情况  
-            result.put("error", "无法获取天气数据");  
-            return result;  
-        }  
-        
-        List<Map<String, Object>> forecasts = (List<Map<String, Object>>) amapData.get("forecasts");
+            result.put("error", "无法获取天气数据");
+            return result;
+        }
+
+        Map<String, Object> resultData = (Map<String, Object>)amapData.get("result");
+        List<Map<String, Object>> forecasts = (List<Map<String, Object>>) resultData.get("result");
         if (forecasts.isEmpty()) {  
             result.put("error", "无天气数据");  
             return result;  
