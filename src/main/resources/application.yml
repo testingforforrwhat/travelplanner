@@ -60,6 +60,11 @@ spring:
   #      - 前后端分离的SPA
   # - 密码模式（password）
   # - 刷新令牌（refresh_token）
+  #
+  # Spring Security OAuth2 Client 的最大好处是极大简化了安全集成，不用再手动获取和维护 token，特别适合：
+  # - 后台服务调用第三方
+  # - 企业内部对接 OpenFeign
+  # - 微服务链路自动安全化
   security:
     oauth2:
       client:
