@@ -57,8 +57,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Web for REST API
     implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security for authentication
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.security:spring-security-oauth2-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign' // api call
+    implementation 'org.springframework.security:spring-security-oauth2-client'  // get token
 
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' // JWT
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT
