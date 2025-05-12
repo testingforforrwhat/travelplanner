@@ -103,6 +103,7 @@ spring:
   security:
     oauth2:
       client:
+        # 如果不同 API 使用不同的认证体系，要分别配置 OAuth2 客户端
         registration:
           # 登录集成第三方OAuth2服务, 常见如：GitHub、Google、Facebook、WeChat等登录
           # registration名
