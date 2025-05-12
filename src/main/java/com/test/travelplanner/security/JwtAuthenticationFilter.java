@@ -58,6 +58,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
 
+    /**
+     *
+     * 收到请求自动拽取并转发 token,校验 header 里的 token 是否有效
+     * 若 token 非法/过期/用户已被拉黑，直接返回 401/403
+     * 若 token 合法，再进一步做权限验证
+     *
+     * @param request
+     * @return
+     */
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(HEADER);
         if (bearerToken == null || !bearerToken.startsWith(PREFIX)) {
