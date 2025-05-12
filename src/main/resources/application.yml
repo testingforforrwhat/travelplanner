@@ -20,6 +20,7 @@ spring:
         enabled: true
         clientRegistrationId: mapTest
       client:
+        # 每个不同的 API，定义一个不同的 Feign 接口和配置块
         config:
           map-api:
             url: https://routes.googleapis.com/directions/v2:computeRoutes
