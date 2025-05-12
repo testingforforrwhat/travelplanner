@@ -54,6 +54,10 @@ spring:
   # OAuth2 认证流程支持
   # - 授权码模式（authorization_code）
   # - 客户端模式（client_credentials）
+  #    ' 多种客户端类型
+  #      - 普通Web应用（对接第三方登录/API）
+  #      - 纯后端应用（服务间调用）
+  #      - 前后端分离的SPA
   # - 密码模式（password）
   # - 刷新令牌（refresh_token）
   security:
