@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    //    Spring Cloud Releases and Compatibility - https://spring.io/projects/spring-cloud/#overview
+    //    Gradle Dependency Management Plugin 文档 - https://github.com/spring-gradle-plugins/dependency-management-plugin
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
 }
