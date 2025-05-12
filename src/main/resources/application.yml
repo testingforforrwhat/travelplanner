@@ -76,6 +76,12 @@ spring:
             client-id: ${payment.client.id}
             client-secret: ${payment.client.secret}
             authorization-grant-type: client_credentials
+          # 微服务间安全通信, 服务A调用受保护的服务B接口
+          # registration名
+          message-service:
+            client-id: ${payment.client.id}
+            client-secret: ${payment.client.secret}
+            authorization-grant-type: client_credentials
         provider:
           # 与上面registration名要一致
           twitch:
