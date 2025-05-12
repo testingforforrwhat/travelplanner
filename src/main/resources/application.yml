@@ -30,6 +30,11 @@ spring:
             # default-query-parameters：每次请求自动加上 key 等参数
             default-query-parameters:
               key: ${key}
+          weather-api:
+            url: https://apis.map.qq.com/ws/place/v1/suggestion
+            loggerLevel: basic
+            default-query-parameters:
+              key: ${weather.api-key}
   # spring security OAuth2 Client，
   # 是 spring boot/spring security 用来作为OAuth2客户端去主动“代表应用请求授权、登录、获取资源”
   #
