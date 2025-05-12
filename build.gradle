@@ -43,7 +43,7 @@ repositories {
 // Spring Cloud 推荐通过 BOM（Bill of Materials）统一管理依赖版本。如果你只写了 starter 名，没有 BOM，也找不到可解析的版本。
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2024.0.0"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.5"
     }
 }
 
