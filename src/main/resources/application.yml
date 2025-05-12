@@ -18,7 +18,11 @@ spring:
       # 自动获取 OAuth2 clientRegistrationId token，并附在 Authorization: Bearer token
       oauth2:
         enabled: true
-        clientRegistrationId: mapTest
+        clients:
+          map-api: # ----- Maps API FeignClient专用
+            clientRegistrationId: mapTest
+          weather-api: # ----- 天气API FeignClient专用
+            clientRegistrationId: weatherTest
       client:
         # 每个不同的 API，定义一个不同的 Feign 接口和配置块
         config:
