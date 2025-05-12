@@ -59,6 +59,7 @@ spring:
           github:
             client-id: ${github.client.id}
             client-secret: ${github.client.secret}
+          # 后端服务调用OAuth2保护的API, 如对接支付、云服务、第三方开放平台API
           # registration名
           twitch:
             # 授权类型
@@ -69,6 +70,12 @@ spring:
             client-id: ${Client-Id}
             # OAuth客户端密钥
             client-secret: ${client-secret}
+          # 后端服务调用OAuth2保护的API, 如对接支付、云服务、第三方开放平台API
+          # registration名
+          payment-service:
+            client-id: ${payment.client.id}
+            client-secret: ${payment.client.secret}
+            authorization-grant-type: client_credentials
         provider:
           # 与上面registration名要一致
           twitch:
