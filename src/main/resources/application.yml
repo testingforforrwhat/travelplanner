@@ -54,12 +54,19 @@ spring:
     oauth2:
       client:
         registration:
+          # 登录集成第三方OAuth2服务, 常见如：GitHub、Google、Facebook、WeChat等登录
+          # registration名
+          github:
+            client-id: ${github.client.id}
+            client-secret: ${github.client.secret}
+          # registration名
           twitch:
             authorization-grant-type: client_credentials
             client-authentication-method: client_secret_post
             client-id: ${Client-Id}
             client-secret: ${client-secret}
         provider:
+          # 与上面registration名要一致
           twitch:
             token-uri: https://id.twitch.tv/oauth2/token
   datasource:
