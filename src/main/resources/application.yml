@@ -10,6 +10,58 @@ spring:
       max-file-size: 10MB # File upload limit, default 1MB not enough.
   jackson:
     default-property-inclusion: non_null
+  cloud:
+    openfeign:
+      # oauth2.enabled: true：Feign 自动通过你配置的 mapTest 客户端去拿 AccessToken，所有 Feign 请求都自动带上 Bearer Token; Bearer Token 是 default-request-headers 之一;
+      #
+      # 不需要写拦截器/切换手动逻辑，全部用配置即可
+      # 自动获取 OAuth2 clientRegistrationId token，并附在 Authorization: Bearer token
+      oauth2:
+        enabled: true
+        clientRegistrationId: mapTest
+      client:
+        config:
+          map-api:
+            url: https://routes.googleapis.com/directions/v2:computeRoutes
+            loggerLevel: basic
+            # 每次请求自动加上指定请求头，不需要在代码里 set。
+            default-request-headers:
+              X-Goog-FieldMask: ${X-Goog-FieldMask}
+            # default-query-parameters：每次请求自动加上 key 等参数
+            default-query-parameters:
+              key: ${key}
+  # spring security OAuth2 Client，
+  # 是 spring boot/spring security 用来作为OAuth2客户端去主动“代表应用请求授权、登录、获取资源”
+  #
+  # spring security OAuth2 Client 是一个简化 OAuth2/OIDC 客户端集成的强大组件，可以使得你的应用轻松与第三方认证服务器（如 Google、GitHub、微信等）集成。
+  #
+  # Spring Security OAuth2 Client 是 Spring Security 5.x+ 的重要组件，用于帮助应用连接 OAuth2/OpenID Connect 服务、获取令牌、并使用令牌访问受保护资源。
+  # Spring Security OAuth2 Client 主要用于管理 OAuth2 客户端身份，自动处理第三方API访问时的认证授权，常用于：
+  # - 获取并管理 OAuth2 Access Token（无论是 client_credentials、authorization_code、password、或 refresh_token 流程）
+  # - 自动添加 Authorization Header
+  # - 与 OpenFeign 或 RestTemplate 集成，实现无感知安全请求
+  #
+  # 服务本身作为 OAuth2 Client 调用第三方API
+  # 如：
+  # - 服务端后台自动调用 Google、Twitch、微信等第三方API, 获取访问令牌 / 自动令牌刷新 / 令牌存储/缓存
+  # - 微服务间调用时，每个服务都做自己的认证授权
+  #
+  #
+  # 代表**当前应用（作为Client）**去认证服务器（如 Google、GitHub、阿里云、Twitch、微信等）获取token
+  # 管理token的存储、刷新、传递
+  # 便于主动调用外部受保护API（和OAuth2 Login用户登录不一样，这边重点是“Server端-Server端”对接）
+  security:
+    oauth2:
+      client:
+        registration:
+          twitch:
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_post
+            client-id: ${Client-Id}
+            client-secret: ${client-secret}
+        provider:
+          twitch:
+            token-uri: https://id.twitch.tv/oauth2/token
   datasource:
     url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/postgres
     username: ${DATABASE_USERNAME:postgres}
