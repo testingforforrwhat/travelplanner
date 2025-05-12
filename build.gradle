@@ -40,6 +40,13 @@ repositories {
     mavenCentral() // 最后兜底
 }
 
+// Spring Cloud 推荐通过 BOM（Bill of Materials）统一管理依赖版本。如果你只写了 starter 名，没有 BOM，也找不到可解析的版本。
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2024.0.0"
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3' // mybatis for database access
