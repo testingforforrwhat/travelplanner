@@ -87,6 +87,13 @@ spring:
   #    <groupId>org.springframework.boot</groupId>
   #    <artifactId>spring-boot-starter-oauth2-client</artifactId>
   # </dependency>
+  #
+  # 核心组件
+  # ClientRegistration：OAuth2客户端注册信息
+  # OAuth2AuthorizedClient：授权成功后的客户端，包含令牌
+  # OAuth2AuthorizedClientRepository：存储授权客户端的位置
+  # OAuth2AuthorizedClientService：管理授权客户端
+  # OAuth2AuthorizedClientManager：协调授权流程
   security:
     oauth2:
       client:
