@@ -50,6 +50,12 @@ spring:
   # 代表**当前应用（作为Client）**去认证服务器（如 Google、GitHub、阿里云、Twitch、微信等）获取token
   # 管理token的存储、刷新、传递
   # 便于主动调用外部受保护API（和OAuth2 Login用户登录不一样，这边重点是“Server端-Server端”对接）
+  #
+  # OAuth2 认证流程支持
+  # - 授权码模式（authorization_code）
+  # - 客户端模式（client_credentials）
+  # - 密码模式（password）
+  # - 刷新令牌（refresh_token）
   security:
     oauth2:
       client:
@@ -79,8 +85,8 @@ spring:
           # 微服务间安全通信, 服务A调用受保护的服务B接口
           # registration名
           message-service:
-            client-id: ${payment.client.id}
-            client-secret: ${payment.client.secret}
+            client-id: ${message.client.id}
+            client-secret: ${message.client.secret}
             authorization-grant-type: client_credentials
         provider:
           # 与上面registration名要一致
