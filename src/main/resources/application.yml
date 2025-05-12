@@ -79,6 +79,14 @@ spring:
   # API授权：应用代表用户调用第三方API（如发推、发微博）
   # 微服务间通信：服务A代表用户调用服务B (Token Relay)
   #后台API调用：使用 client_credentials 流程访问API（不涉及用户）
+  #
+  # implementation 'org.springframework.security:spring-security-oauth2-client
+  #
+  # <!-- Spring Boot 项目 -->
+  # <dependency>
+  #    <groupId>org.springframework.boot</groupId>
+  #    <artifactId>spring-boot-starter-oauth2-client</artifactId>
+  # </dependency>
   security:
     oauth2:
       client:
