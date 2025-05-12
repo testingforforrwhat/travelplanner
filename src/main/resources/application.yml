@@ -65,6 +65,20 @@ spring:
   # - 后台服务调用第三方
   # - 企业内部对接 OpenFeign
   # - 微服务链路自动安全化
+  #
+  #
+  # Spring Security OAuth2 Client 是一个简化 OAuth2/OIDC 客户端集成的强大组件，可以使得你的应用轻松与第三方认证服务器（如 Google、GitHub、微信等）集成。详细解析：
+  #
+  #一、核心功能
+  # 身份认证：通过 OAuth2/OIDC 协议实现用户登录
+  # 资源访问：获取令牌访问受保护资源
+  # 令牌管理：自动处理令牌获取、刷新和失效
+  # 客户端注册：集中管理多个 OAuth2 提供商
+  #二、常见使用场景
+  # 三方登录：让用户用 Google/微信/支付宝等账号登录你的应用
+  # API授权：应用代表用户调用第三方API（如发推、发微博）
+  # 微服务间通信：服务A代表用户调用服务B (Token Relay)
+  #后台API调用：使用 client_credentials 流程访问API（不涉及用户）
   security:
     oauth2:
       client:
