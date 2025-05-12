@@ -66,13 +66,18 @@ spring:
         registration:
           # 登录集成第三方OAuth2服务, 常见如：GitHub、Google、Facebook、WeChat等登录
           # registration名
+          # 授权码模式（网站登录）
           github:
+            # OAuth2 认证授权类型
+            authorization-grant-type: authorization_code
             client-id: ${github.client.id}
             client-secret: ${github.client.secret}
+            redirect-uri: "{baseUrl}/login/oauth2/code/github"
+            scope: [ user, email ]
           # 后端服务调用OAuth2保护的API, 如对接支付、云服务、第三方开放平台API
           # registration名
           twitch:
-            # 授权类型
+            # OAuth2 认证授权类型
             authorization-grant-type: client_credentials
             # 客户端认证方式
             client-authentication-method: client_secret_post
@@ -83,15 +88,17 @@ spring:
           # 后端服务调用OAuth2保护的API, 如对接支付、云服务、第三方开放平台API
           # registration名
           payment-service:
+            # OAuth2 认证授权类型
+            authorization-grant-type: client_credentials
             client-id: ${payment.client.id}
             client-secret: ${payment.client.secret}
-            authorization-grant-type: client_credentials
           # 微服务间安全通信, 服务A调用受保护的服务B接口
           # registration名
           message-service:
+            # OAuth2 认证授权类型
+            authorization-grant-type: client_credentials
             client-id: ${message.client.id}
             client-secret: ${message.client.secret}
-            authorization-grant-type: client_credentials
         provider:
           # 与上面registration名要一致
           twitch:
