@@ -18,6 +18,7 @@ spring:
       # 自动获取 OAuth2 clientRegistrationId token，并附在 Authorization: Bearer token
       oauth2:
         enabled: true
+        # clientRegistrationId: mapTest
         clients:
           map-api: # ----- Maps API FeignClient专用
             clientRegistrationId: mapTest
