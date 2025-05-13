@@ -2,9 +2,13 @@ package com.test.travelplanner.controller;
 
 
 import com.test.travelplanner.service.DeepSeekService;
+import dev.langchain4j.model.StreamingResponseHandler;
+import dev.langchain4j.model.output.Response;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.HashMap;  
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;  
 
 @RestController  
@@ -26,5 +30,53 @@ public class ChatController {
         Map<String, String> result = new HashMap<>();  
         result.put("response", response);  
         return result;  
-    }  
+    }
+
+    @PostMapping("/chat/sse")
+    public SseEmitter chatSse(@RequestBody Map<String, String> request) {
+        SseEmitter emitter = new SseEmitter(0L); // 无超时
+        String message = request.get("message");
+
+        // 设置完成和错误回调
+        emitter.onCompletion(() -> System.out.println("SSE completed"));
+        emitter.onError(ex -> System.err.println("SSE error: " + ex.getMessage()));
+
+        // 启动异步处理
+        new Thread(() -> {
+            try {
+                deepSeekService.chatStream(message, new StreamingResponseHandler<String>() {
+                    @Override
+                    public void onNext(String token) {
+                        try {
+                            emitter.send(SseEmitter.event().data(token));
+                        } catch (IOException e) {
+                            // 处理发送错误
+                            onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete(Response<String> response) {
+                        try {
+                            // 可选：发送完成标记
+                            emitter.send(SseEmitter.event().name("complete").data(""));
+                            emitter.complete();
+                        } catch (IOException e) {
+                            onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        emitter.completeWithError(error);
+                    }
+                });
+            } catch (Exception ex) {
+                emitter.completeWithError(ex);
+            }
+        }).start();
+
+        return emitter;
+    }
+
 }  

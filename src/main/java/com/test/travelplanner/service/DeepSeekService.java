@@ -1,15 +1,20 @@
 package com.test.travelplanner.service;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;  
-import dev.langchain4j.model.openai.OpenAiChatModel;  
-import dev.langchain4j.service.SystemMessage;  
-import org.springframework.beans.factory.annotation.Value;  
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.model.StreamingResponseHandler;
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
+import dev.langchain4j.service.SystemMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;  
 
 @Service  
 public class DeepSeekService {  
 
     private final ChatLanguageModel chatModel;
+    private final StreamingChatLanguageModel streamingChatModel; // 流式模型
 
     /**
      *
@@ -47,7 +52,14 @@ public class DeepSeekService {
                 .apiKey(apiKey)  
                 .baseUrl(baseUrl)  
                 .modelName(model)  
-                .build();  
+                .build();
+
+        // 创建流式模型实例
+        this.streamingChatModel = OpenAiStreamingChatModel.builder()
+                .apiKey(apiKey)
+                .baseUrl(baseUrl)
+                .modelName(model)
+                .build();
     }
 
     /**
@@ -55,5 +67,13 @@ public class DeepSeekService {
      */
     public String chat(String message) {  
         return chatModel.generate(message);  
-    }  
+    }
+
+    /**
+     * 流式返回聊天消息（异步）
+     */
+    public void chatStream(String message, StreamingResponseHandler<String> handler) {
+        streamingChatModel.generate(UserMessage.from(message), handler);
+    }
+
 }  
