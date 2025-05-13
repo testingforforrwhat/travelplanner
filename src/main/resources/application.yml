@@ -164,6 +164,8 @@ spring:
         # - 每个 registration 有对应的 provider 属性
         # - 每个被引用的 provider 名称在 provider 部分有定义
         # - provider 至少有 token-uri 属性（client_credentials 模式必需）
+        #
+        # 内置Provider：Spring支持一些内置provider如Google、GitHub、Okta，使用时只需指定名称无需定义endpoint。
         provider:
           # 与上面registration名要一致
           twitch:
