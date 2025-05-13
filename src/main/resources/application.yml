@@ -150,6 +150,14 @@ spring:
           twitch:
             # 令牌端点
             token-uri: https://id.twitch.tv/oauth2/token
+          # 与上面registration名要一致
+          payment-service:
+            # 令牌端点
+            token-uri: https://id.twitch.tv/oauth2/token
+          # 与上面registration名要一致
+          message-service:
+            # 令牌端点
+            token-uri: https://id.twitch.tv/oauth2/token
   datasource:
     url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/postgres
     username: ${DATABASE_USERNAME:postgres}
