@@ -141,6 +141,10 @@ spring:
           # 当你配置 Spring Security OAuth2 Client 时，每个客户端注册（client_credentials registration）必须:
           # - 指定一个 provider 属性
           # - 这个 provider 必须在配置中有对应定义
+          # 确保你的配置：
+          # - 每个 registration 有对应的 provider 属性
+          # - 每个被引用的 provider 名称在 provider 部分有定义
+          # - provider 至少有 token-uri 属性（client_credentials 模式必需）
           payment-service:
             # OAuth2 认证授权类型
             authorization-grant-type: client_credentials
@@ -153,6 +157,13 @@ spring:
             authorization-grant-type: client_credentials
             client-id: ${message.client.id}
             client-secret: ${message.client.secret}
+        # 当你配置 Spring Security OAuth2 Client 时，每个客户端注册（client_credentials registration）必须:
+        # - 指定一个 provider 属性
+        # - 这个 provider 必须在配置中有对应定义
+        # 确保你的配置：
+        # - 每个 registration 有对应的 provider 属性
+        # - 每个被引用的 provider 名称在 provider 部分有定义
+        # - provider 至少有 token-uri 属性（client_credentials 模式必需）
         provider:
           # 与上面registration名要一致
           twitch:
