@@ -133,6 +133,14 @@ spring:
             client-secret: ${client-secret}
           # 后端服务调用OAuth2保护的API, 如对接支付、云服务、第三方开放平台API
           # registration名
+          #
+          # fix: Provider ID must be specified for client registration 'message-service'
+          # fix: 错误发生的关键原因是：
+          #      - Spring Boot 启动时创建 InMemoryClientRegistrationRepository Bean
+          #      - 检查到 message-service 客户端注册（client_credentials registration）未指定 provider，导致实例化失败
+          # 当你配置 Spring Security OAuth2 Client 时，每个客户端注册（client_credentials registration）必须:
+          # - 指定一个 provider 属性
+          # - 这个 provider 必须在配置中有对应定义
           payment-service:
             # OAuth2 认证授权类型
             authorization-grant-type: client_credentials
