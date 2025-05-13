@@ -2,6 +2,7 @@ package com.test.travelplanner.controller;
 
 
 import com.test.travelplanner.service.DeepSeekService;
+import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.output.Response;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class ChatController {
         // 启动异步处理
         new Thread(() -> {
             try {
-                deepSeekService.chatStream(message, new StreamingResponseHandler<String>() {
+                deepSeekService.chatStream(message, new StreamingResponseHandler<AiMessage>() {
                     @Override
                     public void onNext(String token) {
                         try {
@@ -56,7 +57,7 @@ public class ChatController {
                     }
 
                     @Override
-                    public void onComplete(Response<String> response) {
+                    public void onComplete(Response<AiMessage> response) {
                         try {
                             // 可选：发送完成标记
                             emitter.send(SseEmitter.event().name("complete").data(""));

@@ -1,14 +1,21 @@
 package com.test.travelplanner.service;
 
+import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
+import dev.langchain4j.model.openai.OpenAiTokenizer;
 import dev.langchain4j.service.SystemMessage;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;  
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+
+import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO;
 
 @Service  
 public class DeepSeekService {  
@@ -59,6 +66,7 @@ public class DeepSeekService {
                 .apiKey(apiKey)
                 .baseUrl(baseUrl)
                 .modelName(model)
+                .tokenizer(new OpenAiTokenizer(GPT_3_5_TURBO)) // 用 GPT 3.5 的 tokenizer
                 .build();
     }
 
@@ -71,9 +79,16 @@ public class DeepSeekService {
 
     /**
      * 流式返回聊天消息（异步）
+     *
+     * 在 LangChain4j 中，StreamingChatLanguageModel 的 generate 方法参数如下：
+     * - 输入：ChatMessage 或 List<ChatMessage>
+     * - 回调处理器：StreamingResponseHandler<AIMessage>（不是 <String>）
+     *
      */
-    public void chatStream(String message, StreamingResponseHandler<String> handler) {
-        streamingChatModel.generate(UserMessage.from(message), handler);
+    public void chatStream(String message, StreamingResponseHandler<AiMessage> handler) {
+        // 创建用户消息
+        ChatMessage userMessage = UserMessage.from(message);
+        streamingChatModel.generate(Collections.singletonList(userMessage), handler);
     }
 
 }  
