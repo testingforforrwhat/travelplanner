@@ -35,6 +35,8 @@ public class ChatController {
 
     /**
      *
+     * sse stream
+     * 
      * https://docs.langchain4j.dev/tutorials/ai-services#streaming - The AI Service can stream response token-by-token
      * https://docs.langchain4j.dev/tutorials/response-streaming/ - LLMs generate text one token at a time, so many LLM providers offer a way to stream the response token-by-token instead of waiting for the entire text to be generated. This significantly improves the user experience, as the user does not need to wait an unknown amount of time and can start reading the response almost immediately.
      * https://docs.langchain4j.dev/tutorials/spring-boot-integration/ - Spring Boot starters help with creating and configuring language models, embedding models, embedding stores, and other core LangChain4j components through properties.
