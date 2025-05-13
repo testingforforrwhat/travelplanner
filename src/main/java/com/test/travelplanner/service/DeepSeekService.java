@@ -66,6 +66,16 @@ public class DeepSeekService {
                 .apiKey(apiKey)
                 .baseUrl(baseUrl)
                 .modelName(model)
+                /**
+                 *
+                 * "trace": "java.lang.IllegalArgumentException: Model 'deepseek-chat' is unknown to jtokkit\r\n\tat dev.langchain4j.internal.Exceptions.illegalArgument(Exceptions.java:6)\r\n\ta
+                 *
+                 * 你的错误来自 jtokkit 库，它不认识 deepseek-chat 模型，无法为该模型计算 token。
+                 * 这个错误通常发生在 LangChain4j 尝试为你的模型计算 token 数量时，但它的词汇表库中没有 DeepSeek 模型的定义。
+                 *
+                 * fix: .tokenizer(new OpenAiTokenizer(GPT_3_5_TURBO)) // 可以选一个类似的模型:  GPT 3.5 的 tokenizer
+                 *
+                 */
                 .tokenizer(new OpenAiTokenizer(GPT_3_5_TURBO)) // 用 GPT 3.5 的 tokenizer
                 .build();
     }
