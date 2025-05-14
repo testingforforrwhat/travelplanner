@@ -37,6 +37,7 @@ services:
     #   SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/testdb
     # 等价于设置了环境变量，只会覆盖这几个指定的项，不会影响 application.yml 里其它没有覆盖的配置。
     environment:
+      # 数据库配置
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: secret
@@ -47,7 +48,13 @@ services:
       #  - 方法二: 修改 Dockerfile，确保目录存在并有正确权限
       #  - 方法三: 使用 volumes 挂载本地目录（并授权）
       FILE_UPLOAD_DIR: uploads
+      # Redis 配置
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      # Kafka 配置
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      # 应用配置
+      SERVER_PORT: 8081
     networks:
       - app-travelplanner-network
 
