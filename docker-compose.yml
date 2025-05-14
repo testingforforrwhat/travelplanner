@@ -114,6 +114,8 @@ services:
       #
       # 方案一：只用一个监听器（最简单且常用）
       # 删除 PLAINTEXT_HOST，只用 PLAINTEXT 即可（容器内部和外部都走 PLAINTEXT://0.0.0.0:9092）。
+      #
+      # 方案二：两个监听器但端口要不同（比如容器内监听 9092，容器外监听 9093）
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # KAFKA_ADVERTISED_LISTENERS: 告诉客户端如何连接到 Kafka（内部用服务名，外部用localhost）
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
