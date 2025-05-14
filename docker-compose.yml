@@ -94,12 +94,16 @@ services:
     # 虽然我们在容器内监听了两个不同的端口（9092和9093），但通过端口映射，外部依然是通过本地的9092端口访问Kafka。
     ports:
       - "9092:9092"
+      - "9093:9093"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       # KAFKA_LISTENERS: 指定 Kafka broker 监听的地址和端口
       #
       # 两个监听器（PLAINTEXT 和 PLAINTEXT_HOST）, 我们需要为不同的监听器指定不同的端口
+      #
+      # PLAINTEXT 用于 Docker 网络内部通信（比如 Spring Boot 容器用 kafka:9092 访问）。
+      # PLAINTEXT_HOST 用于主机上客户端（IDE 或 kafka tool）访问，用 localhost:29092。
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # KAFKA_ADVERTISED_LISTENERS: 告诉客户端如何连接到 Kafka
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
