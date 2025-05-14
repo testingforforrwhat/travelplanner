@@ -97,7 +97,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       # 指定 Kafka broker 监听的地址和端口
       #
-      # 两个监听器（PLAINTEXT 和 PLAINTEXT_HOST）
+      # 两个监听器（PLAINTEXT 和 PLAINTEXT_HOST）, 我们需要为不同的监听器指定不同的端口
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # 告诉客户端如何连接到 Kafka
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
