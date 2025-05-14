@@ -200,6 +200,8 @@ spring:
       mode: always
       # schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
       # data-locations: "classpath:config-data.sql"
+  kafka:
+    bootstrap-servers: localhost:9093
 
 logging:
   level:
