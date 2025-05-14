@@ -88,6 +88,7 @@ services:
       - app-travelplanner-network
 
   # 检查 Kafka 日志确认启动正常：docker-compose logs kafka
+  # kafka - docker container ( docker-compose.yml ) + 宿主机 ( application.yml )
   kafka:
     image: confluentinc/cp-kafka:7.3.0
     restart: always
