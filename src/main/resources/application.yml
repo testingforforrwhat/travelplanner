@@ -200,6 +200,7 @@ spring:
       mode: always
       # schema-locations: "classpath:postgis_extension.sql,classpath:database-init.sql"
       # data-locations: "classpath:config-data.sql"
+  # kafka - docker container ( docker-compose.yml ) + 宿主机 ( application.yml )
   kafka:
     bootstrap-servers: localhost:9093
 
