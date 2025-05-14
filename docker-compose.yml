@@ -109,8 +109,8 @@ services:
       #
       # | 场景                | KAFKA_LISTENERS                        | KAFKA_ADVERTISED_LISTENERS             | ports                   |
       #|---------------------|----------------------------------------|-----------------------------------------|-------------------------|
-      #| 仅容器内部通信      | PLAINTEXT://0.0.0.0:9092               | PLAINTEXT://kafka:9092                 | 9092:9092               |
-      #| 宿主机/本地也要连接 | PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092 | PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092 | 9092:9092, 29092:29092  |  
+      #| 仅容器内部通信      | PLAINTEXT://0.0.0.0:9092               | PLAINTEXT://kafka:9092, 告诉容器网络内的客户端，使用 kafka:9092 连接                 | 9092:9092               |
+      #| 宿主机/本地也要连接 | PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092 | PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092, 告诉宿主机上的客户端，使用 localhost:29092 连接 | 9092:9092, 29092:29092  |
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # KAFKA_ADVERTISED_LISTENERS: 告诉客户端如何连接到 Kafka（内部用服务名，外部用localhost）
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
