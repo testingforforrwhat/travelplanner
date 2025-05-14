@@ -102,8 +102,8 @@ services:
       #
       # 两个监听器（PLAINTEXT 和 PLAINTEXT_HOST）, 我们需要为不同的监听器指定不同的端口
       #
-      # PLAINTEXT 用于 Docker 网络内部通信（比如 Spring Boot 容器用 kafka:9092 访问）。
-      # PLAINTEXT_HOST 用于主机上客户端（IDE 或 kafka tool）访问，用 localhost:29092。
+      # PLAINTEXT - docker 容器网络内部通信（比如 Spring Boot 容器使用 服务名访问: kafka:9092 访问）。
+      # PLAINTEXT_HOST - 主机客户端（IDE 或 kafka tool）访问，用 localhost:29092。
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # KAFKA_ADVERTISED_LISTENERS: 告诉客户端如何连接到 Kafka
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
