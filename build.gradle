@@ -85,6 +85,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'  // 用于WebClient
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.42'
 
+    // Redis 依赖
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // Kafka 依赖
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // 测试依赖
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    
 }
 
 tasks.named('test') {
