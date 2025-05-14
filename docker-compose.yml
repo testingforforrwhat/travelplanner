@@ -104,6 +104,21 @@ services:
     networks:
       - app-travelplanner-network
 
+  # Kafka GUI管理工具(可选)
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - kafka
+    networks:
+      - app-travelplanner-network
 
 # 如果你不显式定义网络，Docker Compose 会自动为所有服务创建一个默认的桥接网络（bridge）。
 # 自定义网络：通过 networks 配置，你可以创建一个自定义的桥接网络，并将服务连接到该网络
