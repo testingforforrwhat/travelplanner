@@ -90,16 +90,17 @@ services:
     image: confluentinc/cp-kafka:7.3.0
     restart: always
     container_name: kafka
-    # 虽然我们在容器内监听了两个不同的端口（9092和9093），但通过端口映射，外部依然是通过本地的9092端口访问Kafka。
     ports:
       - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       # 指定 Kafka broker 监听的地址和端口
+      #
+      # 两个监听器（PLAINTEXT 和 PLAINTEXT_HOST）
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
       # 告诉客户端如何连接到 Kafka
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
