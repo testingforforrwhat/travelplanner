@@ -47,6 +47,7 @@ services:
       #  - 方法二: 修改 Dockerfile，确保目录存在并有正确权限
       #  - 方法三: 使用 volumes 挂载本地目录（并授权）
       FILE_UPLOAD_DIR: uploads
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
       - app-travelplanner-network
 
