@@ -39,6 +39,8 @@ public class DevRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         generateSampleData();
 
+        List<DestinationEntity> destinationEntity = destinationRepository.findAll();
+        logger.info("Found {} destinations: {}", destinationEntity.size(), destinationEntity);
 
     }
 
