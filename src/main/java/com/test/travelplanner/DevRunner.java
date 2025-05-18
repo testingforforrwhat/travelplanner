@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
+/**
+ * add init data
+ */
 @Component
 public class DevRunner implements ApplicationRunner {
 
