@@ -131,6 +131,7 @@ public class RedisAspect {
             // 去Redis获取缓存数据
             System.out.println("Redis ==> 去Redis中查询缓存数据！ ");
             logger.info("Redis ==> 去Redis中查询缓存数据！ ");
+            // get cacheData by redisKeyName
             Object cacheData = redisUtil.get(key);
             logger.info("cacheData:{}", cacheData);
 
