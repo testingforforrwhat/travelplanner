@@ -76,6 +76,8 @@ public class RedisAspect {
 
         /**
          *
+         * joinPoint.getSignature().toString()返回的是方法签名的描述，包含方法的修饰、类、参数、返回值等关键信息。
+         * 
          * joinPoint.getArgs() - 获取当前切面方法的所有参数数组。
          *
          * Arrays.stream(...).iterator().next() - 将参数数组转为Stream，并拿到第一个参数。 如果参数为空数组会抛异常。
