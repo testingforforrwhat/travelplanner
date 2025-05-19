@@ -16,7 +16,7 @@ public class ResponseBodyAspect {
     public void beforeMethodWithResponseBody(JoinPoint joinPoint, ResponseBody responseBody) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getSimpleName();
-        System.out.println("==> Invoking method " + className + "." + methodName + " which has @ResponseBody annotation.");
+        System.out.println("============> Invoking method " + className + "." + methodName + " which has @ResponseBody annotation.");
     }
 
     // AfterReturning advice: called after the execution of any method annotated with @ResponseBody
@@ -24,6 +24,6 @@ public class ResponseBodyAspect {
     public void afterReturningMethodWithResponseBody(JoinPoint joinPoint, ResponseBody responseBody, Object result) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getSimpleName();
-        System.out.println("==> Method " + className + "." + methodName + " executed and returned: " + result);
+        System.out.println("============> Method " + className + "." + methodName + " executed and returned: " + result);
     }
 }
