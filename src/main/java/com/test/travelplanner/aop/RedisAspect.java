@@ -132,7 +132,7 @@ public class RedisAspect {
             logger.info("Redis ==> generate key and  key 去Redis中查询缓存数据 (对应存储的 value) ！ ");
             // get cacheData by redisKeyName
             Object cacheData = redisUtil.get(key);
-            logger.info(" ==> get cacheData by redisKeyName ==> cacheData:{}", cacheData);
+            logger.info("Redis key (对应存储的 value) ==> get cacheData by redisKeyName ==> cacheData:{}", cacheData);
 
             // 如果第一个键为空，再尝试使用备用键
             if (cacheData == null) {
