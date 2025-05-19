@@ -129,11 +129,10 @@ public class RedisAspect {
         while( true ) {
 
             // 去Redis获取缓存数据
-            System.out.println("Redis ==> 去Redis中查询缓存数据！ ");
-            logger.info("Redis ==> 去Redis中查询缓存数据！ ");
+            logger.info("Redis ==> generate key and  key 去Redis中查询缓存数据！ ");
             // get cacheData by redisKeyName
             Object cacheData = redisUtil.get(key);
-            logger.info("cacheData:{}", cacheData);
+            logger.info(" ==> get cacheData by redisKeyName ==> cacheData:{}", cacheData);
 
             // 如果第一个键为空，再尝试使用备用键
             if (cacheData == null) {
