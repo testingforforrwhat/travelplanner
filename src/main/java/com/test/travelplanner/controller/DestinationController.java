@@ -1,5 +1,6 @@
 package com.test.travelplanner.controller;
 
+import com.test.travelplanner.RedisCache;
 import com.test.travelplanner.model.dto.AttractionDto;
 import com.test.travelplanner.model.dto.DestinationDto;
 import com.test.travelplanner.service.DestinationService;
@@ -24,6 +25,8 @@ public class DestinationController {
     }
 
     // Fetch all destinations
+    @RedisCache( duration = 60 * 60 )
+    @ResponseBody
     @GetMapping
     public ResponseEntity<List<DestinationDto>> getAllDestinations() {
         List<DestinationDto> destinations = destinationService.getAllDestinations();
