@@ -63,8 +63,7 @@ public class RedisAspect {
     @Around( value = "@annotation(redisCache)" )
     public Object around(ProceedingJoinPoint joinPoint , RedisCache redisCache) throws Throwable {
 
-        System.out.println( "Redis ==> 开启缓存策略！ " );
-        log.info( "Redis ==> 开启缓存策略！ " );
+        logger.info( "Redis ==> 开启缓存策略！ " );
 
         // 步骤一：去Redis中读取缓存数据
         // Redis Key 生成规则：方法签名+实参数据
@@ -72,7 +71,7 @@ public class RedisAspect {
         keyMap.put( "signature" , joinPoint.getSignature().toString() );
         keyMap.put( "arguments" , joinPoint.getArgs() );
         String key = JSON.toJSONString( keyMap );
-        System.out.println("Redis Key 生成: " + key);
+        logger.info("Redis Key 生成 ( 方法签名+实参数据 ) ==> {}", key);
 
         /**
          *
@@ -133,6 +132,7 @@ public class RedisAspect {
             System.out.println("Redis ==> 去Redis中查询缓存数据！ ");
             logger.info("Redis ==> 去Redis中查询缓存数据！ ");
             Object cacheData = redisUtil.get(key);
+            logger.info("cacheData:{}", cacheData);
 
             // 如果第一个键为空，再尝试使用备用键
             if (cacheData == null) {
