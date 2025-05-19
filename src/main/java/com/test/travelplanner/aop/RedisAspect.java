@@ -69,11 +69,7 @@ public class RedisAspect {
 
         // 步骤一：去Redis中读取缓存数据
         // Redis Key 生成规则：方法签名+实参数据
-        Map<String,Object> keyMap = new HashMap<>();
-        keyMap.put( "generateKeyName - signature" , joinPoint.getSignature().toString() );
-        keyMap.put( "arguments" , joinPoint.getArgs() );
-        String key = JSON.toJSONString( keyMap );
-        logger.info("Redis Key 生成 ( 方法签名+实参数据 ) ==> {}", key);
+        String key = buildCacheKey(joinPoint);
 
         /**
          *
@@ -281,6 +277,15 @@ public class RedisAspect {
                 Thread.currentThread().sleep(500);
             }
         }
+    }
+
+    private static String buildCacheKey(ProceedingJoinPoint joinPoint) {
+        Map<String,Object> keyMap = new HashMap<>();
+        keyMap.put( "generateKeyName - signature" , joinPoint.getSignature().toString() );
+        keyMap.put( "arguments" , joinPoint.getArgs() );
+        String key = JSON.toJSONString( keyMap );
+        logger.info("Redis Key 生成 ( 方法签名+实参数据 ) ==> {}", key);
+        return key;
     }
 
     // 判断返回类型是否为ResponseEntity
