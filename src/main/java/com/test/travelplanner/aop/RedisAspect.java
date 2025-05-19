@@ -147,6 +147,29 @@ public class RedisAspect {
                 // 2.1 缓存命中，直接返回缓存数据
                 logger.info("Redis ==> 缓存命中，直接返回缓存数据！ ");
 
+                /**
+                 *
+                 * ERROR 15288 --- [nio-8081-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context
+                 * with path [] threw exception [Request processing failed: java.lang.ClassCastException:
+                 * class com.test.travelplanner.model.dto.DestinationDto cannot be cast to class org.springframework.http.ResponseEntity
+                 * (com.test.travelplanner.model.dto.DestinationDto is in unnamed module of loader org.springframework.boot.devtools.restart.classloader.RestartClassLoader @34914907;
+                 * org.springframework.http.ResponseEntity is in unnamed module of loader 'app')] with root cause
+                 *
+                 * java.lang.ClassCastException: class com.test.travelplanner.model.dto.DestinationDto cannot be cast to class org.springframework.http.ResponseEntity
+                 * (com.test.travelplanner.model.dto.DestinationDto is in unnamed module of loader org.springframework.boot.devtools.restart.classloader.RestartClassLoader @34914907;
+                 * org.springframework.http.ResponseEntity is in unnamed module of loader 'app')
+                 * 	at com.test.travelplanner.controller.DestinationController$$SpringCGLIB$$0.getDestinationById(<generated>) ~[main/:na]
+                 * 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+                 * 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+                 * 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+                 * 	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+                 *
+                 */
+                // 这里是关键：我们要把缓存的DTO包装成ResponseEntity再返回
+                if (isResponseEntityReturnType(joinPoint)) {
+                    return ResponseEntity.ok(cacheData);
+                }
+
                 destinationsUtils.incrementClickCount(Arrays.stream(joinPoint.getArgs()).iterator().next().toString());
 
                 String name = destinationRepository.findById(Long.valueOf(Arrays.stream(joinPoint.getArgs()).iterator().next().toString())).get().getName();
