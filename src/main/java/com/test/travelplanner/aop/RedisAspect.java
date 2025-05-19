@@ -129,7 +129,7 @@ public class RedisAspect {
         while( true ) {
 
             // 去Redis获取缓存数据
-            logger.info("Redis ==> generate key and  key 去Redis中查询缓存数据！ ");
+            logger.info("Redis ==> generate key and  key 去Redis中查询缓存数据 (对应存储的 value) ！ ");
             // get cacheData by redisKeyName
             Object cacheData = redisUtil.get(key);
             logger.info(" ==> get cacheData by redisKeyName ==> cacheData:{}", cacheData);
