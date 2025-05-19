@@ -20,6 +20,8 @@ import java.util.List;
  *
  * ApplicationRunner CommandLineRunner
  *
+ * 你可以安全地读写数据库，插入初始数据、生成表、做基础校验等。
+ * 
  */
 @Component
 public class DevRunner implements ApplicationRunner {
