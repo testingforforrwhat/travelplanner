@@ -143,13 +143,11 @@ public class RedisAspect {
             // 步骤二：判断缓存数据是否存在
             if (cacheData != null) {
                 // 2.1 缓存命中，直接返回缓存数据
-                System.out.println("Redis ==> 缓存命中，直接返回缓存数据！ ");
                 logger.info("Redis ==> 缓存命中，直接返回缓存数据！ ");
 
                 destinationsUtils.incrementClickCount(Arrays.stream(joinPoint.getArgs()).iterator().next().toString());
 
                 String name = destinationRepository.findById(Long.valueOf(Arrays.stream(joinPoint.getArgs()).iterator().next().toString())).get().getName();
-                System.out.println("name: " + name);
                 logger.info("name ==> {}", name);
                 ZSetOperations<String, Object> zSetOps = redisUtil.zSet();
                 zSetOps.add("destination:topDestinationsByClickCount", name, (Integer) redisUtil.get("destination:clickCountByWeekByDestinationId:" + Arrays.stream(joinPoint.getArgs()).iterator().next().toString()));
@@ -164,13 +162,11 @@ public class RedisAspect {
                 // ==> 缓存击穿 => 争夺分布式锁 成功
 
                 // 步骤三：去MySQL查询数据
-                System.out.println("Redis ==> 缓存未命中，去MySQL查询数据！ ");
                 logger.info("Redis ==> 缓存未命中，去MySQL查询数据！ ");
                 // 通过joinPoint连接点，调用代理的目标方法（业务逻辑层中的核心业务方法）
                 Object returnValue = joinPoint.proceed();
 
                 // 步骤四：将MySQL中查询到的数据，生成缓存到Redis中
-                System.out.println("Redis ==> 生成缓存到Redis中！ ");
                 logger.info("Redis ==> 生成缓存到Redis中！ ");
                 // ==> 缓存穿透 => 判断 将MySQL中查询到的数据是否为null
                 if (returnValue == null) {
