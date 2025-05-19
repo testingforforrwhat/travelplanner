@@ -166,6 +166,7 @@ public class RedisAspect {
                 // 通过joinPoint连接点，调用代理的目标方法（业务逻辑层中的核心业务方法）
                 Object returnValue = joinPoint.proceed();
                 logger.info("api method call response ==> returnValue.toString(): {}", returnValue.toString());
+                logger.info(" check response type ==> returnValue: {}", returnValue.getClass().getName());
 
                 // 步骤四：将MySQL中查询到的数据，生成缓存到Redis中
                 logger.info("Redis ==> MySQL中查询到的数据，生成缓存到Redis中！ ");
