@@ -167,6 +167,40 @@ public class RedisAspect {
                  */
                 // 这里是关键：我们要把缓存的DTO包装成ResponseEntity再返回
                 if (isResponseEntityReturnType(joinPoint)) {
+                    /**
+                     * Cannot construct instance of `org.springframework.http.ResponseEntity` (no Creators, like default constructor, exist)
+                     *
+                     * 这个错误表明你的 Redis AOP 缓存机制尝试将 ResponseEntity 类型的对象直接缓存到 Redis 中，但反序列化时失败。这是因为 ResponseEntity 没有默认构造函数。
+                     *
+                     * 在你给出的DTO代码环境下，其本质是你把ResponseEntity封装的内容直接缓存到了Redis，
+                     * 并希望反序列化( object to jsonString )为ResponseEntity——
+                     * 但是Jackson和RedisTemplate无法完成对ResponseEntity的反序列化（因为它没有无参构造方法和标准JavaBean约定，不适合直接做序列化）。
+                     *
+                     *
+                     * {
+                     * "@class":"org.springframework.http.ResponseEntity",
+                     * "headers":{
+                     *   "@class":"org.springframework.http.ReadOnlyHttpHeaders"
+                     * },
+                     * "body":{
+                     *   "@class":"com.test.travelplanner.model.dto.DestinationDto",
+                     *   "id":1,"name":"洛杉矶","location":"洛杉矶","description":"阳光明媚，电影之都的魅力",
+                     *   "imageUrl":"require('@/assets/images/la/santa-monica.png')",
+                     *   "averageRating":2.0,
+                     *   "attractions":[
+                     *     "java.util.ImmutableCollections$ListN",
+                     *     []
+                     *    ]
+                     * },
+                     * "statusCodeValue":200,
+                     * "statusCode":[
+                     *   "org.springframework.http.HttpStatus",
+                     *   "OK"]
+                     * }
+                     *
+                     * fix: logger.info("返回值是ResponseEntity，只缓存响应体 - "body"，不缓存整个ResponseEntity");
+                     * 
+                     */
                     return ResponseEntity.ok(cacheData);
                 }
 
