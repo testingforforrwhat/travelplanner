@@ -56,7 +56,7 @@ public class DevRunner implements ApplicationRunner {
 
         destinationRepository.saveAll(List.of(
               new DestinationEntity("洛杉矶","洛杉矶","阳光明媚，电影之都的魅力","@/assets/images/la/santa-monica.png",2.0),
-              new DestinationEntity("悉尼","洛杉矶","悉尼歌剧院，海港大桥的壮丽景色","@/assets/images/sydney.jpg",2.0)
+              new DestinationEntity("悉尼","洛杉矶","悉尼歌剧院，海港大桥的壮丽景色","@/assets/images/sydney.jpg",2.0),
               new DestinationEntity("北京","洛杉矶","历史悠久，长城与故宫的辉煌","@/assets/images/beijing.jpeg",2.0)
         ));
 
