@@ -14,12 +14,14 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Redis缓存策略 切面类
@@ -165,7 +167,16 @@ public class RedisAspect {
                 logger.info("Redis ==> 缓存未命中，去MySQL查询数据！ ");
                 // 通过joinPoint连接点，调用代理的目标方法（业务逻辑层中的核心业务方法）
                 Object returnValue = joinPoint.proceed();
-                logger.info("api method call response ==> returnValue.toString(): {}", returnValue.toString());
+                /**
+                 * Cannot construct instance of `org.springframework.http.ResponseEntity` (no Creators, like default constructor, exist)
+                 *
+                 * 这个错误表明你的 Redis AOP 缓存机制尝试将 ResponseEntity 类型的对象直接缓存到 Redis 中，但反序列化时失败。这是因为 ResponseEntity 没有默认构造函数。
+                 *
+                 * 在你给出的DTO代码环境下，其本质是你把ResponseEntity封装的内容直接缓存到了Redis，
+                 * 并希望反序列化( object to jsonString )为ResponseEntity——
+                 * 但是Jackson和RedisTemplate无法完成对ResponseEntity的反序列化（因为它没有无参构造方法和标准JavaBean约定，不适合直接做序列化）。
+                 *
+                 */
                 logger.info(" check response type ==> returnValue: {}", returnValue.getClass().getName());
 
                 // 步骤四：将MySQL中查询到的数据，生成缓存到Redis中
@@ -177,12 +188,31 @@ public class RedisAspect {
                     redisUtil.set(key, "null", 50);
                 } else {
                     // ==> 缓存穿透 => 正常生成缓存
-                    redisUtil.set(
-                            key,                      // redis存储的key
-                            returnValue,              // redis存储的value
-                            // redis数据的生命周期（单位：秒） ==> 缓存雪崩 => 生命周期中增加随机部分，避免缓存在同一时间同时失效
-                            redisCache.duration() + (int)( Math.random() * redisCache.duration() / 10 )
-                    );
+                    if (returnValue instanceof ResponseEntity<?> responseEntity) {
+                        // 只缓存响应体，不缓存整个ResponseEntity
+                        Object body = responseEntity.getBody();
+                        if (body != null) {
+                            logger.info("返回值是ResponseEntity，只缓存响应体，不缓存整个ResponseEntity");
+                            redisUtil.set(
+                                    key,                      // redis存储的key
+                                    body,              // redis存储的value
+                                    // redis数据的生命周期（单位：秒） ==> 缓存雪崩 => 生命周期中增加随机部分，避免缓存在同一时间同时失效
+                                    redisCache.duration() + (int)( Math.random() * redisCache.duration() / 10 )
+                            );
+                            logger.info("Redis ==> 数据已缓存");
+                        } else {
+                            // 如果返回值不是ResponseEntity，则直接缓存
+                            logger.info("返回值不是ResponseEntity，直接缓存");
+                            redisUtil.set(
+                                    key,                      // redis存储的key
+                                    returnValue,              // redis存储的value
+                                    // redis数据的生命周期（单位：秒） ==> 缓存雪崩 => 生命周期中增加随机部分，避免缓存在同一时间同时失效
+                                    redisCache.duration() + (int)( Math.random() * redisCache.duration() / 10 )
+                            );
+                            logger.info("Redis ==> 数据已缓存");
+                        }
+                    }
+
                 }
 
                 // 返回 代理的目标方法的返回值
@@ -193,6 +223,17 @@ public class RedisAspect {
                 // ==> 缓存击穿 => 延时 500毫秒 => 重新判断缓存数据是否存在
                 Thread.currentThread().sleep(500);
             }
+        }
+    }
+
+    // 判断返回类型是否为ResponseEntity
+    private boolean isResponseEntityReturnType(ProceedingJoinPoint joinPoint) {
+        try {
+            String returnTypeName = joinPoint.getSignature().toString()
+                    .split(" ")[0]; // 假设方法签名的第一部分是返回类型
+            return returnTypeName.contains("ResponseEntity");
+        } catch (Exception e) {
+            return false;
         }
     }
 
