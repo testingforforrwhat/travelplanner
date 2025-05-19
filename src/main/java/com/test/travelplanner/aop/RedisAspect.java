@@ -68,7 +68,7 @@ public class RedisAspect {
         // 步骤一：去Redis中读取缓存数据
         // Redis Key 生成规则：方法签名+实参数据
         Map<String,Object> keyMap = new HashMap<>();
-        keyMap.put( "signature" , joinPoint.getSignature().toString() );
+        keyMap.put( "generateKeyName - signature" , joinPoint.getSignature().toString() );
         keyMap.put( "arguments" , joinPoint.getArgs() );
         String key = JSON.toJSONString( keyMap );
         logger.info("Redis Key 生成 ( 方法签名+实参数据 ) ==> {}", key);
@@ -165,6 +165,7 @@ public class RedisAspect {
                 logger.info("Redis ==> 缓存未命中，去MySQL查询数据！ ");
                 // 通过joinPoint连接点，调用代理的目标方法（业务逻辑层中的核心业务方法）
                 Object returnValue = joinPoint.proceed();
+                logger.info("api method call response ==> returnValue.toString(): {}", returnValue.toString());
 
                 // 步骤四：将MySQL中查询到的数据，生成缓存到Redis中
                 logger.info("Redis ==> MySQL中查询到的数据，生成缓存到Redis中！ ");
