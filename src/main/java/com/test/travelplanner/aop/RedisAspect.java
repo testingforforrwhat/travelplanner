@@ -163,6 +163,11 @@ public class RedisAspect {
                  */
                 // 这里是关键：我们要把缓存的DTO包装成ResponseEntity再返回
                 if (isResponseEntityReturnType(joinPoint)) {
+
+                    logger.info(" ==> isResponseEntityReturnType");
+
+                    incrementClickCountAndRank(joinPoint);
+
                     /**
                      * Cannot construct instance of `org.springframework.http.ResponseEntity` (no Creators, like default constructor, exist)
                      *
@@ -197,18 +202,14 @@ public class RedisAspect {
                      * fix: logger.info("返回值是ResponseEntity，只缓存响应体 - "body"，不缓存整个ResponseEntity");
                      * 
                      */
-                    return ResponseEntity.ok(cacheData);
+                    // ==> 缓存穿透 => 判断Redis中查询到的缓存数据是否是 "null"
+                    return "null".equals(cacheData) ? null : ResponseEntity.ok(cacheData);
+                } else {
+                    logger.info(" ==> isNotResponseEntityReturnType");
+                    incrementClickCountAndRank(joinPoint);
+                    return "null".equals(cacheData) ? null : cacheData;
                 }
 
-                destinationsUtils.incrementClickCount(Arrays.stream(joinPoint.getArgs()).iterator().next().toString());
-
-                String name = destinationRepository.findById(Long.valueOf(Arrays.stream(joinPoint.getArgs()).iterator().next().toString())).get().getName();
-                logger.info("name ==> {}", name);
-                ZSetOperations<String, Object> zSetOps = redisUtil.zSet();
-                zSetOps.add("destination:topDestinationsByClickCount", name, (Integer) redisUtil.get("destination:clickCountByWeekByDestinationId:" + Arrays.stream(joinPoint.getArgs()).iterator().next().toString()));
-
-                // ==> 缓存穿透 => 判断Redis中查询到的缓存数据是否是 "null"
-                return "null".equals(cacheData) ? null : cacheData;
             }
 
             // 2.2 缓存未命中
@@ -277,6 +278,15 @@ public class RedisAspect {
                 Thread.currentThread().sleep(500);
             }
         }
+    }
+
+    private void incrementClickCountAndRank(ProceedingJoinPoint joinPoint) {
+        destinationsUtils.incrementClickCount(Arrays.stream(joinPoint.getArgs()).iterator().next().toString());
+
+        String name = destinationRepository.findById(Long.valueOf(Arrays.stream(joinPoint.getArgs()).iterator().next().toString())).get().getName();
+        logger.info("name ==> {}", name);
+        ZSetOperations<String, Object> zSetOps = redisUtil.zSet();
+        zSetOps.add("destination:topDestinationsByClickCount", name, (Integer) redisUtil.get("destination:clickCountByWeekByDestinationId:" + Arrays.stream(joinPoint.getArgs()).iterator().next().toString()));
     }
 
     private static String buildCacheKey(ProceedingJoinPoint joinPoint) {
