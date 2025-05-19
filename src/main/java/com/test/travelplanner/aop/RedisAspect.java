@@ -74,7 +74,14 @@ public class RedisAspect {
         String key = JSON.toJSONString( keyMap );
         System.out.println("Redis Key 生成: " + key);
 
-        String nameTopTen = destinationRepository.findById(Long.valueOf(Arrays.stream(joinPoint.getArgs()).iterator().next().toString())).get().getName();
+        String nameTopTen = destinationRepository.findById(
+                Long.valueOf(
+                        Arrays.stream(joinPoint.getArgs())
+                                .iterator()
+                                .next()
+                                .toString()
+                )).get().getName();
+        
         System.out.println("filenameTopTen: " + nameTopTen);
         String NameTopTen = nameTopTen;
         String keyTopTen = "destination:name:clickCountByWeekByDestinationId:" + NameTopTen;
