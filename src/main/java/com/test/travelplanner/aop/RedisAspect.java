@@ -76,8 +76,30 @@ public class RedisAspect {
 
         /**
          *
+         * ------------------------------------------------------------------------------------------
          * joinPoint.getSignature().toString()返回的是方法签名的描述，包含方法的修饰、类、参数、返回值等关键信息。
-         * 
+         * ------------------------------------------------------------------------------------------
+         *
+         * 方法调用会返回如下格式的字符串：修饰符 返回类型 包名.类名.方法名(参数列表)
+         * 例如：
+         * 假设你有如下方法：
+         *
+         * ```java
+         * @RedisCache
+         * @GetMapping
+         * public String getDestination(Long id) {}
+         * ```
+         *
+         * 对应的signature.toString() 可能输出：
+         *
+         * String com.test.travelplanner.controller.DestinationController.getDestinationById(Long) - 返回值类型 包名.类名.方法名(参数类型列表)
+         *
+         *
+         * String methodName = joinPoint.getSignature().getName(); - Spring AOP的JoinPoint提供的Signature对象，只获取方法名 getDestinationById）
+         * String methodName = joinPoint.getSignature().getDeclaringTypeName(); - Spring AOP的JoinPoint提供的Signature对象，只获取声明类名（如com.test.travelplanner.controller.DestinationController）
+         * String methodName = joinPoint.getSignature().toShortString(); - Spring AOP的JoinPoint提供的Signature对象，只返回简短签名。
+         * String methodName = joinPoint.getSignature().toLongString(); - Spring AOP的JoinPoint提供的Signature对象，返回更详细签名（包含参数名）。
+         *
          * joinPoint.getArgs() - 获取当前切面方法的所有参数数组。
          *
          * Arrays.stream(...).iterator().next() - 将参数数组转为Stream，并拿到第一个参数。 如果参数为空数组会抛异常。
