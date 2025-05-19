@@ -39,6 +39,7 @@ public class AppConfig {
                         auth
                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/destinations").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/destinations/**").permitAll()
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                 )
