@@ -15,6 +15,11 @@ import java.util.List;
 
 /**
  * add init data
+ *
+ * 通常推荐ApplicationRunner。原因：参数解析能力更强，更易扩展功能。
+ *
+ * ApplicationRunner CommandLineRunner
+ *
  */
 @Component
 public class DevRunner implements ApplicationRunner {
