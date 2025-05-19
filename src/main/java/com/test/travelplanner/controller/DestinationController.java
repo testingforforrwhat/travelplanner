@@ -25,7 +25,6 @@ public class DestinationController {
     }
 
     // Fetch all destinations
-    @RedisCache( duration = 60 * 60 )
     @ResponseBody
     @GetMapping
     public ResponseEntity<List<DestinationDto>> getAllDestinations() {
@@ -34,6 +33,8 @@ public class DestinationController {
     }
 
     // Fetch a destination by ID
+    @RedisCache( duration = 60 * 60 )
+    @ResponseBody
     @GetMapping("/{id}")
     public ResponseEntity<DestinationDto> getDestinationById(@PathVariable Long id) {
         Optional<DestinationDto> destination = destinationService.getDestinationById(id);
