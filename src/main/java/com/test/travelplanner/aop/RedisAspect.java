@@ -74,6 +74,22 @@ public class RedisAspect {
         String key = JSON.toJSONString( keyMap );
         System.out.println("Redis Key 生成: " + key);
 
+        /**
+         *
+         * joinPoint.getArgs() - 获取当前切面方法的所有参数数组。
+         *
+         * Arrays.stream(...).iterator().next() - 将参数数组转为Stream，并拿到第一个参数。
+         *
+         * .toString() - 把第一个参数转换成字符串（假设这个参数本应该是数字类型或能正确toString）。
+         *
+         * Long.valueOf(...) - 将这个字符串转换为 Long 类型。
+         *
+         * destinationRepository.findById(...) - 用 Long 类型主键去数据库查找 Destination 实体。
+         *
+         * .get().getName() - 拿到查询到的 destination 的 name 字段。
+         *
+         * 
+         */
         String nameTopTen = destinationRepository.findById(
                 Long.valueOf(
                         Arrays.stream(joinPoint.getArgs())
@@ -81,7 +97,7 @@ public class RedisAspect {
                                 .next()
                                 .toString()
                 )).get().getName();
-        
+
         System.out.println("filenameTopTen: " + nameTopTen);
         String NameTopTen = nameTopTen;
         String keyTopTen = "destination:name:clickCountByWeekByDestinationId:" + NameTopTen;
