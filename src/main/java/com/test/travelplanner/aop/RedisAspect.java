@@ -167,7 +167,7 @@ public class RedisAspect {
                 Object returnValue = joinPoint.proceed();
 
                 // 步骤四：将MySQL中查询到的数据，生成缓存到Redis中
-                logger.info("Redis ==> 生成缓存到Redis中！ ");
+                logger.info("Redis ==> MySQL中查询到的数据，生成缓存到Redis中！ ");
                 // ==> 缓存穿透 => 判断 将MySQL中查询到的数据是否为null
                 if (returnValue == null) {
                     // ==> 缓存穿透 => 对null空值，依然生成缓存，生命周期较短。为了避免缓存穿透。
