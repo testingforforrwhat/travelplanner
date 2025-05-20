@@ -1,4 +1,4 @@
-package com.test.travelplanner;
+package com.test.travelplanner.annotation;
 
 import java.lang.annotation.*;
 

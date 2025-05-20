@@ -2,7 +2,7 @@ package com.test.travelplanner.aop;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.test.travelplanner.RedisCache;
+import com.test.travelplanner.annotation.RedisCache;
 import com.test.travelplanner.redis.DestinationsUtils;
 import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.repository.DestinationRepository;
@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Redis缓存策略 切面类

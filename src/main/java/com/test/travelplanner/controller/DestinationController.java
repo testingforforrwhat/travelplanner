@@ -1,14 +1,12 @@
 package com.test.travelplanner.controller;
 
-import com.test.travelplanner.RedisCache;
+import com.test.travelplanner.annotation.RedisCache;
 import com.test.travelplanner.model.dto.AttractionDto;
 import com.test.travelplanner.model.dto.DestinationDto;
-import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.service.impl.DestinationService;
 import com.test.travelplanner.service.impl.AttractionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
