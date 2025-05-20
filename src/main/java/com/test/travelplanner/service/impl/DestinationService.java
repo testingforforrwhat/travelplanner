@@ -5,9 +5,12 @@ import com.test.travelplanner.model.dto.DestinationDto;
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.AttractionEntity;
 import com.test.travelplanner.repository.DestinationRepository;
+import org.locationtech.jts.geom.Coordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,10 +19,12 @@ import java.util.stream.Collectors;
 public class DestinationService {
 
     private final DestinationRepository destinationRepository;
+    private final TencentCosService tencentCosService;
 
     @Autowired
-    public DestinationService(DestinationRepository destinationRepository) {
+    public DestinationService(DestinationRepository destinationRepository, TencentCosService tencentCosService) {
         this.destinationRepository = destinationRepository;
+        this.tencentCosService = tencentCosService;
     }
 
     // Fetch all destinations
@@ -122,5 +127,24 @@ public class DestinationService {
                 .toList();
     }
 
+    public void createListing(
+            String name,
+            String location,
+            String description,
+            MultipartFile image) throws IOException {
+
+        String uploadedUrl = null;
+        if (image != null && !image.isEmpty()) {
+            uploadedUrl = tencentCosService.uploadFile(image);
+        }
+
+        destinationRepository.save(new DestinationEntity(
+                name,
+                location,
+                description,
+                uploadedUrl
+        ));
+
+    }
 }
 

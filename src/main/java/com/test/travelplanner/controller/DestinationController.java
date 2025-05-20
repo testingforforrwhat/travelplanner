@@ -3,11 +3,16 @@ package com.test.travelplanner.controller;
 import com.test.travelplanner.RedisCache;
 import com.test.travelplanner.model.dto.AttractionDto;
 import com.test.travelplanner.model.dto.DestinationDto;
+import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.service.impl.DestinationService;
 import com.test.travelplanner.service.impl.AttractionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +51,21 @@ public class DestinationController {
     public ResponseEntity<DestinationDto> saveDestination(@RequestBody DestinationDto destinationDto) {
         DestinationDto savedDestination = destinationService.saveOrUpdateDestination(destinationDto);
         return ResponseEntity.ok(savedDestination);
+    }
+
+    @PostMapping("/createListingDestinations")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createListing(
+            @RequestParam("name") String name,
+            @RequestParam("location") String location,
+            @RequestParam("description") String description,
+            @RequestParam("image") MultipartFile image
+    ) throws IOException {
+        destinationService.createListing(
+                name,
+                location,
+                description,
+                image);
     }
 
     // Delete a destination by ID

@@ -43,6 +43,17 @@ public class DestinationEntity {
         this.averageRating = averageRating;
     }
 
+    public DestinationEntity(
+            String name,
+            String location,
+            String description,
+            String uploadedUrl) {
+        this.name = name;
+        this.location = location;
+        this.description = description;
+        this.imageUrl = uploadedUrl;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;
