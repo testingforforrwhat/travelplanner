@@ -1,4 +1,4 @@
-package com.test.travelplanner.storage;
+package com.test.travelplanner.service.impl;
 
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.*;
@@ -65,8 +65,8 @@ public class TencentCosService {
         listObjectsRequest.setPrefix("uploads/"); // 可选：指定前缀  
         listObjectsRequest.setMaxKeys(100);  
 
-        ObjectListing objectListing = cosClient.listObjects(listObjectsRequest);  
-        List<COSObjectSummary> objectSummaries = objectListing.getObjectSummaries();  
+        ObjectListing objectListing = cosClient.listObjects(listObjectsRequest);
+        List<COSObjectSummary> objectSummaries = objectListing.getObjectSummaries();
 
         List<String> fileKeys = new ArrayList<>();  
         for (COSObjectSummary summary : objectSummaries) {  

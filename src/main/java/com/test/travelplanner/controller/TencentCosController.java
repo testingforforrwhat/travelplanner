@@ -1,5 +1,6 @@
-package com.test.travelplanner.storage;
+package com.test.travelplanner.controller;
 
+import com.test.travelplanner.service.impl.TencentCosService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

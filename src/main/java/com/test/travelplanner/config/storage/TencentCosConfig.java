@@ -1,4 +1,4 @@
-package com.test.travelplanner.storage;
+package com.test.travelplanner.config.storage;
 
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
