@@ -1,7 +1,7 @@
 package com.test.travelplanner.controller;
 
 
-import com.test.travelplanner.service.DeepSeekService;
+import com.test.travelplanner.service.impl.DeepSeekService;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.output.Response;

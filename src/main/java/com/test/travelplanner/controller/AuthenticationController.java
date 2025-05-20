@@ -2,7 +2,7 @@ package com.test.travelplanner.controller;
 
 
 import com.test.travelplanner.model.entity.UserEntity;
-import com.test.travelplanner.service.AuthenticationService;
+import com.test.travelplanner.service.impl.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
 import com.test.travelplanner.model.LoginResponse;
 import com.test.travelplanner.model.RegisterRequest;

@@ -4,7 +4,7 @@ package com.test.travelplanner.controller;
 import com.test.travelplanner.model.dto.TripDto;
 import com.test.travelplanner.model.TripRequest;
 import com.test.travelplanner.model.entity.UserEntity;
-import com.test.travelplanner.service.TripService;
+import com.test.travelplanner.service.impl.TripService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

@@ -3,8 +3,8 @@ package com.test.travelplanner.controller;
 import com.test.travelplanner.RedisCache;
 import com.test.travelplanner.model.dto.AttractionDto;
 import com.test.travelplanner.model.dto.DestinationDto;
-import com.test.travelplanner.service.DestinationService;
-import com.test.travelplanner.service.AttractionService;
+import com.test.travelplanner.service.impl.DestinationService;
+import com.test.travelplanner.service.impl.AttractionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

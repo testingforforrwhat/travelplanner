@@ -1,4 +1,4 @@
-package com.test.travelplanner.service;
+package com.test.travelplanner.service.impl;
 
 import com.test.travelplanner.model.dto.TripDto;
 import com.test.travelplanner.model.entity.TripEntity;

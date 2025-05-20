@@ -88,6 +88,9 @@ dependencies {
     // Redis 依赖
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    // 阿里云短信平台
+    implementation 'com.aliyun:dysmsapi20170525:2.0.9'
+
     // JavaCV 是一个 Java 语言的计算机视觉库，封装了 OpenCV、FFmpeg 等常用的 C/C++ 库，支持图像和视频处理、机器视觉与多媒体功能。
     // 使用场景示例：图像/视频采集与处理; 多媒体数据分析; 机器视觉开发;
     implementation 'org.bytedeco:javacv-platform:1.5.5'

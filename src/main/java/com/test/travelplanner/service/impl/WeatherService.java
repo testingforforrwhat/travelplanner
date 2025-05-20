@@ -1,4 +1,4 @@
-package com.test.travelplanner.service;
+package com.test.travelplanner.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.test.travelplanner.external.model.WeatherData.DayNightDetail;

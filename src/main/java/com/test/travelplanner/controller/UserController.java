@@ -2,7 +2,7 @@ package com.test.travelplanner.controller;
 
 
 import com.test.travelplanner.model.entity.UserEntity;
-import com.test.travelplanner.service.UserService;
+import com.test.travelplanner.service.impl.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;

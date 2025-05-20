@@ -7,7 +7,7 @@ import com.test.travelplanner.model.CommentResponse;
 import com.test.travelplanner.model.LikeResponse;
 import com.test.travelplanner.model.ShareResponse;
 import com.test.travelplanner.repository.LikeRepository;
-import com.test.travelplanner.service.SocialService;
+import com.test.travelplanner.service.impl.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

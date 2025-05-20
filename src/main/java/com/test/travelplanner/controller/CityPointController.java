@@ -1,7 +1,7 @@
 package com.test.travelplanner.controller;
 
 import com.test.travelplanner.model.entity.CityPoint;
-import com.test.travelplanner.service.CityPointService;
+import com.test.travelplanner.service.impl.CityPointService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
