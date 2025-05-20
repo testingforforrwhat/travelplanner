@@ -9,6 +9,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ *
+ * https://cloud.tencent.com/document/product/436/55377
+ * https://cloud.tencent.com/document/sdk
+ *
+ */
 @Configuration  
 public class TencentCosConfig {  
 
