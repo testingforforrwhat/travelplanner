@@ -3,6 +3,9 @@ package com.test.travelplanner.controller;
 import com.test.travelplanner.annotation.RedisCache;
 import com.test.travelplanner.model.dto.AttractionDto;
 import com.test.travelplanner.model.dto.DestinationDto;
+import com.test.travelplanner.model.dto.unifiedGlobalResponse.ApiResponse;
+import com.test.travelplanner.model.entity.DestinationEntity;
+import com.test.travelplanner.repository.DestinationRepository;
 import com.test.travelplanner.service.impl.DestinationService;
 import com.test.travelplanner.service.impl.AttractionService;
 import org.springframework.http.HttpStatus;
@@ -21,10 +24,12 @@ public class DestinationController {
 
     private final DestinationService destinationService;
     private final AttractionService attractionService;
+    private final DestinationRepository destinationRepository;
 
-    public DestinationController(DestinationService destinationService, AttractionService attractionService) {
+    public DestinationController(DestinationService destinationService, AttractionService attractionService, DestinationRepository destinationRepository) {
         this.destinationService = destinationService;
         this.attractionService = attractionService;
+        this.destinationRepository = destinationRepository;
     }
 
     // Fetch all destinations
@@ -53,17 +58,20 @@ public class DestinationController {
 
     @PostMapping("/createListingDestinations")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createListing(
+    public ResponseEntity<ApiResponse<Optional<DestinationEntity>>> createListing(
             @RequestParam("name") String name,
             @RequestParam("location") String location,
             @RequestParam("description") String description,
             @RequestParam("image") MultipartFile image
     ) throws IOException {
+
         destinationService.createListing(
                 name,
                 location,
                 description,
                 image);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(destinationRepository.findByName(name)));
     }
 
     // Delete a destination by ID
