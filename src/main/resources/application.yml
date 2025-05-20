@@ -252,3 +252,8 @@ deepseek:
 
 tencent:
   api-key: ${weather.api-key}
+  cos:
+    secret-id: ${tencent_cos_secret-id}       # 替换为你的 SecretId
+    secret-key: ${tencent_cos_secret-key}     # 替换为你的 SecretKey
+    region: ${tencent_cos_region}            # 替换为你的存储桶所在的区域
+    bucket-name: ${tencent_cos_bucket-name}   # 替换为你的存储桶名称

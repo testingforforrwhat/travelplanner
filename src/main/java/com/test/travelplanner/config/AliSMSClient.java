@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * https://api.aliyun.com/api-tools/sdk/Dysmsapi?version=2017-05-25&language=java-async-tea&tab=primer-doc
  * https://help.aliyun.com/zh/sms/getting-started/use-sms-api?spm=5176.25163407.console-base_help.dexternal.774d2ec8cWrUpp
- * 
+ *
  */
 @Configuration
 public class AliSMSClient {
