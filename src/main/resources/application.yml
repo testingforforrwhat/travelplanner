@@ -7,7 +7,8 @@ spring:
     active: dev-secrets
   servlet:
     multipart:
-      max-file-size: 10MB # File upload limit, default 1MB not enough.
+      max-file-size: 100MB # File upload limit, default 1MB not enough.
+      max-request-size: 100MB # 总请求体最大100MB（例如一次上传多个文件）
   jackson:
     default-property-inclusion: non_null
   cloud:
