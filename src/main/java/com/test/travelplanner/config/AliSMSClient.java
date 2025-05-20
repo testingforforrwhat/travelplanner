@@ -6,6 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ *
+ * https://api.aliyun.com/api-tools/sdk/Dysmsapi?version=2017-05-25&language=java-async-tea&tab=primer-doc
+ * https://help.aliyun.com/zh/sms/getting-started/use-sms-api?spm=5176.25163407.console-base_help.dexternal.774d2ec8cWrUpp
+ * 
+ */
 @Configuration
 public class AliSMSClient {
 
@@ -21,39 +28,6 @@ public class AliSMSClient {
     @Bean
     public Client createClient() throws Exception {
 
-//        ExcelReader reader = ExcelUtil.getReader("E:\\Downloads\\sms.xls");
-//        List<Map<String, Object>> readAll = reader.readAll();
-//        System.out.println(readAll);
-//        System.out.println(ExcelUtil.getReader(FileUtil.file("E:\\Downloads\\sms.xls"), 0).readColumn(2,1).toString());
-//        String AccessKeyId = ExcelUtil.getReader(FileUtil.file("E:\\Downloads\\sms.xls"), 0).readColumn(2,1).iterator().next().toString();
-//
-//        for (Map<String, Object> readMap:readAll
-//             ) {
-//
-//            for (Map.Entry<String, Object> read:readMap.entrySet()
-//                 ) {
-//                System.out.println(read.getKey());
-//            }
-//        }
-//        // 获取第4个键值对
-//        Map.Entry<String, Object> FourthEntry = null;
-//        int count = 0;
-//        for (Map.Entry<String, Object> entry : readAll.iterator().next().entrySet()) {
-//            if (count == 3) {
-//                FourthEntry = entry;
-//                break;
-//            }
-//            count++;
-//        }
-//        System.out.println(FourthEntry.getValue());
-//
-//        Map.Entry<String, Object> readTheKey = readAll.iterator().next().entrySet().iterator().next();
-//        System.out.println(readTheKey.getValue());
-//        String AccessKeySecret = FourthEntry.getValue().toString();
-//
-//        System.out.println("AccessKeyId: " + AccessKeyId);
-//        System.out.println("AccessKeySecret: " + AccessKeySecret);
-
         Config config = new Config()
                 // 您的 AccessKey ID
                 .setAccessKeyId(accessKeyId)
@@ -63,6 +37,7 @@ public class AliSMSClient {
         config.endpoint = "dysmsapi.aliyuncs.com";
         Client client = new Client(config);
         return client;
+
     }
 
 }
