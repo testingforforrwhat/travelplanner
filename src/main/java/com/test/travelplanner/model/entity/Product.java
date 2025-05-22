@@ -7,6 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Version;
 import lombok.Data;
 
+/**
+ *
+ * MVCC 允许多个事务同时读取数据库中的“同一行”而不会互相阻塞。
+ * 每个事务看到的都是自己操作时刻的数据快照（Snapshot），
+ * 通过版本号或时间戳区分不同数据版本，从而避免锁表、阻塞等影响系统性能的问题。
+ *
+ */
 @Entity
 @Data
 public class Product {
