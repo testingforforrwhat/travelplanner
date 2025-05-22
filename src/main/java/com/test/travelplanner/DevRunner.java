@@ -2,7 +2,9 @@ package com.test.travelplanner;
 
 
 import com.test.travelplanner.model.entity.DestinationEntity;
+import com.test.travelplanner.model.entity.Product;
 import com.test.travelplanner.repository.DestinationRepository;
+import com.test.travelplanner.repository.ProductRepository;
 import com.test.travelplanner.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +32,17 @@ public class DevRunner implements ApplicationRunner {
     static private final Logger logger = LoggerFactory.getLogger(DevRunner.class);
 
     private final DestinationRepository destinationRepository;
+    private final ProductRepository productRepository;
 
 
     public DevRunner(
 
-            DestinationRepository destinationRepository
+            DestinationRepository destinationRepository, ProductRepository productRepository
 
     ) {
 
         this.destinationRepository = destinationRepository;
+        this.productRepository = productRepository;
     }
 
 
@@ -48,6 +52,9 @@ public class DevRunner implements ApplicationRunner {
 
         List<DestinationEntity> destinationEntity = destinationRepository.findAll();
         logger.info("Found {} destinations: {}", destinationEntity.size(), destinationEntity);
+
+        List<Product> products = productRepository.findAll();
+        logger.info("Found {} products: {}", products.size(), products);
 
     }
 
@@ -60,6 +67,12 @@ public class DevRunner implements ApplicationRunner {
               new DestinationEntity("北京","洛杉矶","历史悠久，长城与故宫的辉煌","require('@/assets/images/beijing.jpeg')",2.0),
               new DestinationEntity("test","test","test","require('@/assets/images/beijing.jpeg')",2.0)
         ));
+
+        Product product = new Product();
+        product.setName("测试商品");
+        product.setPrice(100.0);
+        product.setStock(10);
+        productRepository.save( product );
 
     }
 }
