@@ -91,6 +91,9 @@ public class Product {
     @Column(name = "duration")
     private Integer duration; // 行程天数
 
+    /**
+     * 使用 TEXT 类型存储详细行程和服务内容，可以支持较长文本
+     */
     @Column(name = "itinerary", columnDefinition = "TEXT")
     private String itinerary; // 详细行程安排，可存储JSON或文本描述
 
