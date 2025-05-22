@@ -3,6 +3,9 @@ package com.test.travelplanner.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  *
  * MVCC 允许多个事务同时读取数据库中的“同一行”而不会互相阻塞。
@@ -66,4 +69,62 @@ public class Product {
      */
     @Version  // 关键：版本控制字段
     private Integer version;
+
+
+    // 旅行行程相关字段
+
+    @Column(name = "destination", length = 100)
+    private String destination; // 目的地
+
+    @Column(name = "departure_location", length = 100)
+    private String departureLocation; // 出发地
+
+    /**
+     * LocalDate 和 LocalDateTime 类型处理日期和时间
+     */
+    @Column(name = "start_date")
+    private LocalDate startDate; // 行程开始日期
+
+    @Column(name = "end_date")
+    private LocalDate endDate; // 行程结束日期
+
+    @Column(name = "duration")
+    private Integer duration; // 行程天数
+
+    @Column(name = "itinerary", columnDefinition = "TEXT")
+    private String itinerary; // 详细行程安排，可存储JSON或文本描述
+
+    @Column(name = "includes", columnDefinition = "TEXT")
+    private String includes; // 包含的服务（如酒店、餐饮、导游等）
+
+    @Column(name = "excludes", columnDefinition = "TEXT")
+    private String excludes; // 不包含的服务
+
+    @Column(name = "transportation_type", length = 50)
+    private String transportationType; // 交通方式（飞机、火车、巴士等）
+
+    @Column(name = "accommodation_level", length = 50)
+    private String accommodationLevel; // 住宿等级
+
+    @Column(name = "max_participants")
+    private Integer maxParticipants; // 最大参与人数
+
+    @Column(name = "min_participants")
+    private Integer minParticipants; // 最小成团人数
+
+    /**
+     * LocalDate 和 LocalDateTime 类型处理日期和时间
+     */
+    @Column(name = "created_at")
+    private LocalDateTime createdAt; // 产品创建时间
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt; // 产品更新时间
+
+    @Column(name = "product_code", length = 50, unique = true)
+    private String productCode; // 产品编码，唯一
+
+    @Column(name = "status", length = 20)
+    private String status; // 产品状态（上架、下架、售罄等）
+
 }
