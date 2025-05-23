@@ -1,6 +1,7 @@
 // TripItinerary.java
 package com.test.travelplanner.model.entity.trip;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class TripItinerary {
     private Integer dayNumber;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "trip_id")
     private Trip trip;
     

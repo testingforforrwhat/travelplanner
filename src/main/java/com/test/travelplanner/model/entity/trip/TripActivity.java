@@ -1,6 +1,7 @@
 // TripActivity.java
 package com.test.travelplanner.model.entity.trip;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class TripActivity {
     private String description;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "itinerary_id")
     private TripItinerary itinerary;
 }
