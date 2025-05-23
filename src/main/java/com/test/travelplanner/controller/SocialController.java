@@ -6,9 +6,11 @@ import com.test.travelplanner.model.CommentRequest;
 import com.test.travelplanner.model.CommentResponse;
 import com.test.travelplanner.model.LikeResponse;
 import com.test.travelplanner.model.ShareResponse;
+import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.repository.LikeRepository;
 import com.test.travelplanner.service.impl.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +22,39 @@ public class SocialController{
 
     @Autowired
     private LikeRepository likeRepository;
+    @Autowired
+    private RedisUtil redisUtil;
 
     // add comment
     @PostMapping("/{tripId}/comments")
     public ResponseEntity<CommentResponse> addComment(
+            @RequestHeader String authorization,
             @PathVariable Long tripId,
             @RequestBody CommentRequest commentRequest,
             @RequestParam Long userId) {
-        Comment comment = socialService.addComment(userId, tripId, commentRequest.content());
-        CommentResponse response = new CommentResponse(0, "Comment added successfully",
-                new CommentResponse.CommentData(comment.getId(), comment.getContent(), comment.getCreatedAt(),
-                        new CommentResponse.UserResponse(comment.getUserId(), "johndoe")));  // 这里假设用户名固定为 "johndoe" 示例
-        return ResponseEntity.ok(response);
+
+        if (redisUtil.hashKey( authorization ) ) {
+
+            Comment comment = socialService.addComment(userId, tripId, commentRequest.content());
+
+            CommentResponse response =
+                    new CommentResponse(
+                            0,
+                            "Comment added successfully",
+                            new CommentResponse.CommentData(
+                                    comment.getId(),
+                                    comment.getContent(),
+                                    comment.getCreatedAt(),
+                                    new CommentResponse.UserResponse(
+                                            comment.getUserId(),
+                                            "johndoe")
+                            )
+                    );  // 这里假设用户名固定为 "johndoe" 示例
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     // like
