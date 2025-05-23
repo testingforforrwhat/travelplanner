@@ -4,6 +4,7 @@ package com.test.travelplanner;
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
 import com.test.travelplanner.model.entity.trip.Trip;
+import com.test.travelplanner.model.entity.trip.TripHighlight;
 import com.test.travelplanner.model.entity.trip.TripOverview;
 import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -35,18 +37,20 @@ public class DevRunner implements ApplicationRunner {
     private final ProductRepository productRepository;
     private final TripRepository tripRepository;
     private final TripOverviewRepository tripOverviewRepository;
+    private final TripHighlightRepository tripHighlightRepository;
 
 
     public DevRunner(
 
             DestinationRepository destinationRepository, ProductRepository productRepository,
 
-            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository) {
+            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
         this.tripRepository = tripRepository;
         this.tripOverviewRepository = tripOverviewRepository;
+        this.tripHighlightRepository = tripHighlightRepository;
     }
 
 
@@ -79,13 +83,31 @@ public class DevRunner implements ApplicationRunner {
         productRepository.save( product );
 
         Trip trip = new Trip();
-        trip.setTitle("test");
+        trip.setTitle("洛杉矶深度探索之旅");
+        trip.setBannerImage("require('@/assets/logo.png')");
+        trip.setDuration(7);
+        trip.setLocation("美国·洛杉矶");
+        trip.setPrice(BigDecimal.valueOf(0));
         tripRepository.save( trip );
 
         TripOverview tripOverview = new TripOverview();
         tripOverview.setTrip(trip);
-        tripOverview.setTitle("test");
-        tripOverview.setTitle("test");
+        tripOverview.setIcon("fas fa-calendar");
+        tripOverview.setTitle("最佳旅行时间");
+        tripOverview.setContent("3月-5月，9月-11月");
         tripOverviewRepository.save(tripOverview);
+
+        TripOverview tripOverview2 = new TripOverview();
+        tripOverview2.setTrip(trip);
+        tripOverview2.setIcon("fas fa-user-friends");
+        tripOverview2.setTitle("适合人群");
+        tripOverview2.setContent("情侣、家庭、好友");
+        tripOverviewRepository.save(tripOverview2);
+
+        TripHighlight tripHighlight = new TripHighlight();
+        tripHighlight.setTrip(trip);
+        tripHighlight.setTitle("好莱坞环球影城");
+        tripHighlight.setDescription("体验世界顶级主题公园，感受电影的魅力");
+        tripHighlightRepository.save( tripHighlight );
     }
 }
