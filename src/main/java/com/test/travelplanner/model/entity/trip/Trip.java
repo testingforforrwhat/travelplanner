@@ -7,6 +7,30 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 
+ * 实体关系结构：
+ * 主实体 Trip 与子实体采用一对多关系
+ * 每个子实体都有对应的数据库表
+ * 使用 CascadeType.ALL 确保级联操作，实现自动保存/删除子实体
+ * 
+ * 
+ * Hibernate 注解使用：
+ * @Entity：标记 JPA 实体类
+ * @Table：指定对应的数据库表名
+ * @Column：自定义列名或属性
+ * @OneToMany：一对多关系映射
+ * @ManyToOne：多对一关系映射
+ * 
+ * 
+ * 优化设计：
+ * 使用 FetchType.LAZY 延迟加载提高性能
+ * 使用 orphanRemoval=true 自动清理孤立数据
+ * 添加辅助方法方便实体对象关系维护
+ * 数据库添加索引提高查询性能
+ * 
+ */
 @Entity
 @Table(name = "trips")
 @Data
