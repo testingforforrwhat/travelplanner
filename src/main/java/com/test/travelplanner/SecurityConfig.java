@@ -33,6 +33,14 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/destinations").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/destinations/**").permitAll()
+                                // 放行 swagger 所有相关文档和静态资源（path 可能与你前端框架配置略有不同）
+                                .requestMatchers(
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources/**",
+                                        "/webjars/**"
+                                ).permitAll()
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                 )
