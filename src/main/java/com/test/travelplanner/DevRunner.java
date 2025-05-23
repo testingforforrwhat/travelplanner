@@ -3,9 +3,7 @@ package com.test.travelplanner;
 
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
-import com.test.travelplanner.model.entity.trip.Trip;
-import com.test.travelplanner.model.entity.trip.TripHighlight;
-import com.test.travelplanner.model.entity.trip.TripOverview;
+import com.test.travelplanner.model.entity.trip.*;
 import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,19 +36,23 @@ public class DevRunner implements ApplicationRunner {
     private final TripRepository tripRepository;
     private final TripOverviewRepository tripOverviewRepository;
     private final TripHighlightRepository tripHighlightRepository;
+    private final TripActivityRepository tripActivityRepository;
+    private final TripItineraryRepository tripItineraryRepository;
 
 
     public DevRunner(
 
             DestinationRepository destinationRepository, ProductRepository productRepository,
 
-            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository) {
+            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository, TripActivityRepository tripActivityRepository, TripItineraryRepository tripItineraryRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
         this.tripRepository = tripRepository;
         this.tripOverviewRepository = tripOverviewRepository;
         this.tripHighlightRepository = tripHighlightRepository;
+        this.tripActivityRepository = tripActivityRepository;
+        this.tripItineraryRepository = tripItineraryRepository;
     }
 
 
@@ -109,5 +111,19 @@ public class DevRunner implements ApplicationRunner {
         tripHighlight.setTitle("好莱坞环球影城");
         tripHighlight.setDescription("体验世界顶级主题公园，感受电影的魅力");
         tripHighlightRepository.save( tripHighlight );
+
+        TripItinerary tripItinerary = new TripItinerary();
+        tripItinerary.setTrip(trip);
+        tripItinerary.setTitle("抵达洛杉矶");
+        tripItineraryRepository.save( tripItinerary );
+
+        TripActivity tripActivity = new TripActivity();
+        tripActivity.setItinerary(tripItinerary);
+        tripActivity.setTime("14:00");
+        tripActivity.setTitle("抵达机场");
+        tripActivity.setDescription("LAX机场接机，入住酒店");
+        tripActivityRepository.save( tripActivity );
+
+
     }
 }
