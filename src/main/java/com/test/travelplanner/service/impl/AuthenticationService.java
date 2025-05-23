@@ -6,6 +6,7 @@ import com.test.travelplanner.authentication.UserAlreadyExistException;
 import com.test.travelplanner.model.dto.user.LoginAuthResponse;
 import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.model.entity.UserRole;
+import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.repository.UserRepository;
 import com.test.travelplanner.security.JwtHandler;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,19 +23,21 @@ public class AuthenticationService {
    private final JwtHandler jwtHandler;
    private final PasswordEncoder passwordEncoder;
    private final UserRepository userRepository;
+    private final RedisUtil redisUtil;
 
 
-   public AuthenticationService(
+    public AuthenticationService(
            AuthenticationManager authenticationManager,
            JwtHandler jwtHandler,
            PasswordEncoder passwordEncoder,
-           UserRepository userRepository
-   ) {
+           UserRepository userRepository,
+           RedisUtil redisUtil) {
        this.authenticationManager = authenticationManager;
        this.jwtHandler = jwtHandler;
        this.passwordEncoder = passwordEncoder;
        this.userRepository = userRepository;
-   }
+        this.redisUtil = redisUtil;
+    }
 
 
    public UserEntity register(String username, String password, UserRole role, String email) throws UserAlreadyExistException {
@@ -56,7 +59,12 @@ public class AuthenticationService {
    public LoginAuthResponse login(String username, String password) {
        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
        LoginAuthResponse authResponse = new LoginAuthResponse();
+       String token = jwtHandler.generateToken(username);
        authResponse.setToken(jwtHandler.generateToken(username));
+
+       // 签发的令牌，存入Redis中。拼接上Authorization的策略（Bearer Token）前缀。
+       redisUtil.set( "Bearer " + token , username , 60 * 24 );
+
        authResponse.setUser(username);
 
        return authResponse;
