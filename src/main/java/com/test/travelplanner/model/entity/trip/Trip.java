@@ -53,7 +53,7 @@ public class Trip {
     private BigDecimal price;
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference  //   @JsonManagedReference + @JsonBackReference  避免循环引用
     private List<TripOverview> overview = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
