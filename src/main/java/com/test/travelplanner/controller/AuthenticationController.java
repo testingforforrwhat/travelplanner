@@ -1,6 +1,8 @@
 package com.test.travelplanner.controller;
 
 
+import com.test.travelplanner.model.dto.unifiedGlobalResponse.ApiResponse;
+import com.test.travelplanner.model.dto.user.LoginAuthResponse;
 import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.service.impl.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
@@ -8,6 +10,7 @@ import com.test.travelplanner.model.LoginResponse;
 import com.test.travelplanner.model.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -37,8 +40,9 @@ public class AuthenticationController {
 
 
    @PostMapping("/login")
-   public LoginResponse login(@RequestBody LoginRequest body) {
-       String token = authenticationService.login(body.username(), body.password());
-       return new LoginResponse(token);
+   public ResponseEntity<ApiResponse<LoginAuthResponse>> login(@RequestBody LoginRequest body) {
+       LoginAuthResponse authResponse = authenticationService.login(body.username(), body.password());
+       return ResponseEntity.status(HttpStatus.OK)
+               .body(ApiResponse.success(authResponse));
    }
 }

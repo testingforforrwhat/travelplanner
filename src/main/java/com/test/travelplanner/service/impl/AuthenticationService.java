@@ -1,7 +1,9 @@
 package com.test.travelplanner.service.impl;
 
 
+import com.alibaba.fastjson2.JSON;
 import com.test.travelplanner.authentication.UserAlreadyExistException;
+import com.test.travelplanner.model.dto.user.LoginAuthResponse;
 import com.test.travelplanner.model.entity.UserEntity;
 import com.test.travelplanner.model.entity.UserRole;
 import com.test.travelplanner.repository.UserRepository;
@@ -51,8 +53,12 @@ public class AuthenticationService {
    }
 
 
-   public String login(String username, String password) {
+   public LoginAuthResponse login(String username, String password) {
        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-       return jwtHandler.generateToken(username);
+       LoginAuthResponse authResponse = new LoginAuthResponse();
+       authResponse.setToken(jwtHandler.generateToken(username));
+       authResponse.setUser(username);
+
+       return authResponse;
    }
 }
