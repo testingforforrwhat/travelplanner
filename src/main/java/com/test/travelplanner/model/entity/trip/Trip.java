@@ -51,7 +51,14 @@ public class Trip {
     private String location;
     
     private BigDecimal price;
-    
+
+    /**
+     *
+     * 双向关系建议用 @JsonManagedReference / @JsonBackReference；
+     * 或给子表 ManyToOne 关联加 @JsonIgnore；
+     * 或 DTO 分离前后端对象。
+     * 
+     */
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference  //   @JsonManagedReference + @JsonBackReference  避免循环引用
     private List<TripOverview> overview = new ArrayList<>();
