@@ -57,10 +57,16 @@ public class Trip {
      * 双向关系建议用 @JsonManagedReference / @JsonBackReference；
      * 或给子表 ManyToOne 关联加 @JsonIgnore；
      * 或 DTO 分离前后端对象。
-     * 
+     *
+     * 推荐采用 DTO 模式，：
+     * 解耦表现层和持久层：实体类专注于数据库映射，DTO专注于API表现
+     * 更灵活的API设计：可以根据不同API需求设计不同的DTO
+     * 更好的安全控制：避免敏感字段意外暴露
+     * 性能优化：只传输需要的数据
+     *
      */
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference  //   @JsonManagedReference + @JsonBackReference  避免循环引用
+    @JsonManagedReference  //   @JsonManagedReference + @JsonBackReference  避免循环引用; 保持数据库映射的双向关联，但序列化（JSON输出时） 避免循环引用
     private List<TripOverview> overview = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
