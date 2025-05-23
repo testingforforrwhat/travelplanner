@@ -244,6 +244,8 @@ public class RedisAspect {
                     if (returnValue instanceof ResponseEntity<?> responseEntity) {
                         // 只缓存响应体，不缓存整个ResponseEntity
                         Object body = responseEntity.getBody();
+                        logger.info("key: {}", key);
+                        logger.info("body: {}", body);
                         if (body != null) {
                             logger.info("返回值是ResponseEntity，只缓存响应体，不缓存整个ResponseEntity");
                             redisUtil.set(
