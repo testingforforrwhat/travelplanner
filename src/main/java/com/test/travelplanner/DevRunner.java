@@ -3,9 +3,9 @@ package com.test.travelplanner;
 
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
-import com.test.travelplanner.repository.DestinationRepository;
-import com.test.travelplanner.repository.ProductRepository;
-import com.test.travelplanner.repository.UserRepository;
+import com.test.travelplanner.model.entity.trip.Trip;
+import com.test.travelplanner.model.entity.trip.TripOverview;
+import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -33,16 +33,20 @@ public class DevRunner implements ApplicationRunner {
 
     private final DestinationRepository destinationRepository;
     private final ProductRepository productRepository;
+    private final TripRepository tripRepository;
+    private final TripOverviewRepository tripOverviewRepository;
 
 
     public DevRunner(
 
-            DestinationRepository destinationRepository, ProductRepository productRepository
+            DestinationRepository destinationRepository, ProductRepository productRepository,
 
-    ) {
+            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
+        this.tripRepository = tripRepository;
+        this.tripOverviewRepository = tripOverviewRepository;
     }
 
 
@@ -74,5 +78,14 @@ public class DevRunner implements ApplicationRunner {
         product.setStock(10);
         productRepository.save( product );
 
+        Trip trip = new Trip();
+        trip.setTitle("test");
+        tripRepository.save( trip );
+
+        TripOverview tripOverview = new TripOverview();
+        tripOverview.setTrip(trip);
+        tripOverview.setTitle("test");
+        tripOverview.setTitle("test");
+        tripOverviewRepository.save(tripOverview);
     }
 }
