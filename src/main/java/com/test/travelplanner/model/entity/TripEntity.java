@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "trips")
+@Table(name = "trip_entity")
 public class TripEntity {
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment

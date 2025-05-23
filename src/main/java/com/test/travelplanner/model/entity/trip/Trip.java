@@ -1,6 +1,7 @@
 // Trip.java - 主实体类
 package com.test.travelplanner.model.entity.trip;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -52,19 +53,24 @@ public class Trip {
     private BigDecimal price;
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TripOverview> overview = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TripHighlight> highlights = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @OrderBy("dayNumber ASC")
     private List<TripItinerary> itinerary = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TripPriceInclude> priceIncludes = new ArrayList<>();
     
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TripPriceExclude> priceExcludes = new ArrayList<>();
     
     // 辅助方法，简化添加关联实体

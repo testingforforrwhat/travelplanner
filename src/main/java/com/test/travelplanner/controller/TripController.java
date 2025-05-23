@@ -4,6 +4,7 @@ package com.test.travelplanner.controller;
 import com.test.travelplanner.model.dto.TripDto;
 import com.test.travelplanner.model.TripRequest;
 import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.trip.Trip;
 import com.test.travelplanner.service.impl.TripService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -31,6 +33,11 @@ public class TripController {
     @GetMapping
     public List<TripDto> getTrips(@AuthenticationPrincipal UserEntity user) {
         return tripService.findTripsByUserId(user.getId());
+    }
+
+    @GetMapping("/tripDetails/{tripId}")
+    public Optional<Trip> getTripsDataForPage(@PathVariable String tripId) {
+        return tripService.findTripsDataForPage(Long.parseLong(tripId));
     }
 
 
