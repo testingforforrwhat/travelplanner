@@ -1,10 +1,6 @@
 package com.test.travelplanner;
 
 
-import com.google.auth.Credentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import com.google.maps.GeoApiContext;
 import com.test.travelplanner.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,12 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.io.IOException;
-import java.util.Objects;
-
 
 @Configuration
-public class AppConfig {
+public class SecurityConfig {
 
 
     @Bean
