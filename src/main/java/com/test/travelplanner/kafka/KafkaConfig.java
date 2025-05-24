@@ -14,6 +14,13 @@ import org.springframework.kafka.config.TopicBuilder;
  *
  * 目前，Apache ActiveMQ和RabbitMQ等。这些消息中间件不仅提供了丰富的功能，还支持多种通信协议和分布式部署方案，方便开发者根据具体需求选择合适的解决方案。综上所述，消息队列作为现代分布式架构的重要基础设施，对于提高系统的解耦性、稳定性与可扩展性具有不可替代的价值。
  *
+ *
+ * JMS是一套标准，因此Spring Boot整合JMS必然就是整合JMS的某一个实现，
+ *
+ * JMS（Java Message Service）即Java消息服务，它通过统一JAVA API层面的标准，使得多个客户端可以通过JMS进行交互，大
+ * 部分消息中间件提供商都对JMS提供支持。JMS和ActiveMQ的关系就象JDBC和JDBC驱动的关系。
+ * JMS包括两种消息模型：点对点和发布者／订阅者，同时JMS仅支持Java平台。
+ *
  */
 @Configuration
 public class KafkaConfig {
