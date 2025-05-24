@@ -156,6 +156,7 @@ services:
     networks:
       - app-travelplanner-network
 
+  # http://localhost:8848/nacos
   nacos:
     image: nacos/nacos-server:v2.3.2
     container_name: nacos
@@ -175,6 +176,7 @@ services:
     networks:
       - app-travelplanner-network
 
+  # http://localhost:8858
   sentinel:
     image: bladex/sentinel-dashboard:1.8.6
     container_name: sentinel-dashboard
