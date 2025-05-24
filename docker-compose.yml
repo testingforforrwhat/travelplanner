@@ -182,6 +182,7 @@ services:
       - "8858:8858"
     environment:
       - JAVA_OPTS=-Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080
+    # 挂载数据目录，保证日志不会因容器重启丢失（日志目录为 /root/logs）。
     volumes:
       - ./sentinel-data/logs:/opt/sentinel/logs
     restart: always
