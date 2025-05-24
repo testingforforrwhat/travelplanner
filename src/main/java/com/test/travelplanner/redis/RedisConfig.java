@@ -17,6 +17,13 @@ import java.net.UnknownHostException;
 @Configuration
 public class RedisConfig {
 
+    /**
+     *
+     * Redis 配置一定要修改，否则缓存 Order 对象时还会出错
+     *
+     * @param connectionFactory
+     * @return
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
