@@ -27,6 +27,8 @@ public class RedisConfig {
      * 由于你在用 Redis 缓存 Order 对象，确保 RedisTemplate 的序列化器也支持 JSR310
      * Redis 配置一定要修改，否则缓存 Order 对象时还会出错
      *
+     * 这样修改后，你的 LocalDateTime 字段就能正常序列化/反序列化了，无论是 REST API 返回 JSON 还是 Redis 缓存都没问题。
+     *
      * @param connectionFactory
      * @return
      */
