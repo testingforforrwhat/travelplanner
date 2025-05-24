@@ -38,3 +38,4 @@ out/
 src/main/resources/credentials.json
 /src/main/resources/application-dev-secrets.yaml
 /nacos-data/
+/sentinel-data/
