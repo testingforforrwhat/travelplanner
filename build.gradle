@@ -115,7 +115,7 @@ dependencies {
 
     // Spring Cloud Gateway
     // 动态路由: Gateway 支持动态路由配置
-    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 
     // Nacos 服务发现
     // 服务发现自动化: Nacos 实现服务自动注册与发现
