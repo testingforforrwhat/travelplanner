@@ -19,6 +19,11 @@ public class RedisConfig {
 
     /**
      *
+     * "Could not write JSON: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module \"com.fasterxml.jackson.datatype:jackson-datatype-jsr310\" to enable handling (through reference chain: com.test.travelplanner.model.entity.order.Order[\"createdAt\"])",
+     *
+     * fix: 这个错误是因为 Jackson 无法序列化 Java 8 的时间类型（如 LocalDateTime）。
+     *      Spring Boot 2.x+ 默认已经包含了对 JSR310 的支持，但可能配置不当或版本问题导致未生效。
+     *
      * Redis 配置一定要修改，否则缓存 Order 对象时还会出错
      *
      * @param connectionFactory
