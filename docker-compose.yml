@@ -182,6 +182,8 @@ services:
       - "8858:8858"
     environment:
       - JAVA_OPTS=-Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080
+    volumes:
+      - ./sentinel-data/logs:/opt/sentinel/logs
     restart: always
 
 # 如果你不显式定义网络，Docker Compose 会自动为所有服务创建一个默认的桥接网络（bridge）。
