@@ -156,6 +156,25 @@ services:
     networks:
       - app-travelplanner-network
 
+  nacos:
+    image: nacos/nacos-server:v2.3.2
+    container_name: nacos
+    environment:
+      - MODE=standalone
+      - NACOS_AUTH_ENABLE=true    # 打开鉴权（生产建议打开）
+      - NACOS_AUTH_TOKEN=nQPZ70cV4TGH5k3l3AFn4DDW4Vh82CyyDrmc3Kn5inE=
+      - NACOS_CORE_AUTH_SERVER_IDENTITY_KEY=nacos
+      - NACOS_CORE_AUTH_SERVER_IDENTITY_VALUE=nacos
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+      - ./nacos-data/logs:/home/nacos/logs
+      - ./nacos-data/data:/home/nacos/data
+    restart: always
+    networks:
+      - app-travelplanner-network
+
 # 如果你不显式定义网络，Docker Compose 会自动为所有服务创建一个默认的桥接网络（bridge）。
 # 自定义网络：通过 networks 配置，你可以创建一个自定义的桥接网络，并将服务连接到该网络
 #

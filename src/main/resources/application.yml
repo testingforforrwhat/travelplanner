@@ -23,9 +23,14 @@ spring:
   config:
     import:
       - optional:nacos:application.yml  # 从 Nacos 导入配置
+  # WARN 47916 --- [  restartedMain] c.a.c.n.registry.NacosServiceRegistry    : No service to register for nacos client...
+  # 如果你希望把当前应用注册到 Nacos（推荐）
+  application:
+    name: travelplanner    # 必须配置应用名
   cloud:
     nacos:
       discovery:
+        enabled: true    # 打开服务发现/注册功能
         server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
