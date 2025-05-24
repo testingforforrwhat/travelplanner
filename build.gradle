@@ -42,12 +42,21 @@ repositories {
     mavenCentral() // 最后兜底
 }
 
+// 重要：Spring Cloud 版本管理
+ext {
+    set('springCloudVersion', "2022.0.4")
+    set('springCloudAlibabaVersion', "2022.0.0.0")
+}
+
 // Spring Cloud 推荐通过 BOM（Bill of Materials）统一管理依赖版本。如果你只写了 starter 名，没有 BOM，也找不到可解析的版本。
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.5"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
     }
 }
+
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -102,6 +111,23 @@ dependencies {
 
     // Kafka 依赖
     implementation 'org.springframework.kafka:spring-kafka'
+
+
+    // Spring Cloud Gateway
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    // Nacos 服务发现
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+
+    // Nacos 配置中心
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    // 配置处理器
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // 负载均衡
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
 
     // 测试依赖
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
