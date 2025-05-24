@@ -14,6 +14,12 @@ spring:
       location:  # 上传文件的临时存储位置
   jackson:
     default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      adjust-dates-to-context-time-zone: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
   cloud:
     openfeign:
       # oauth2.enabled: true：Feign 自动通过你配置的 mapTest 客户端去拿 AccessToken，所有 Feign 请求都自动带上 Bearer Token; Bearer Token 是 default-request-headers 之一;
