@@ -27,6 +27,7 @@ spring:
   # 如果你希望把当前应用注册到 Nacos（推荐）
   application:
     # discovery - enabled - true - nacos - 服务管理 - 服务列表
+    # 当前服务的名称
     name: travelplanner    # 必须配置应用名
   cloud:
     nacos:
@@ -37,11 +38,15 @@ spring:
         password: ${NACOS_PASSWORD:nacos}
         namespace: ${NACOS_NAMESPACE:public}
       config:
+        # nacos 配置中心的网络域
         server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+        # nacos 配置中心的配置文件类型（yaml 或 properties）
         file-extension: yaml
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
+        # nacos 配置中心的命名空间 http://127.0.0.1:8848/nacos/ 新建命名空间
         namespace: ${NACOS_NAMESPACE:public}
+        # nacos 配置中心的分组
         group: DEFAULT_GROUP
         # 共享配置
         shared-configs:
