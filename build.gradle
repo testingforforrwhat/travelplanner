@@ -131,6 +131,8 @@ dependencies {
     // 负载均衡
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
 
+    // 断路器Hystrix（可选）
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
 
     // 测试依赖
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
