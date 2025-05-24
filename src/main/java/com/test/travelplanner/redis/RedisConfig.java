@@ -19,6 +19,9 @@ public class RedisConfig {
 
     /**
      *
+     * # 创建订单
+     * curl -X POST http://localhost:8081/api/orders -H "Content-Type: application/json" -d '{"userId": 1, "totalAmount": 99.99}'
+     * 
      * "Could not write JSON: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module \"com.fasterxml.jackson.datatype:jackson-datatype-jsr310\" to enable handling (through reference chain: com.test.travelplanner.model.entity.order.Order[\"createdAt\"])",
      *
      * fix: 这个错误是因为 Jackson 无法序列化 Java 8 的时间类型（如 LocalDateTime）。
