@@ -114,12 +114,15 @@ dependencies {
 
 
     // Spring Cloud Gateway
+    // 动态路由: Gateway 支持动态路由配置
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 
     // Nacos 服务发现
+    // 服务发现自动化: Nacos 实现服务自动注册与发现
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 
     // Nacos 配置中心
+    // 配置中心: Nacos 提供配置集中管理与动态推送
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
 
     // 配置处理器
