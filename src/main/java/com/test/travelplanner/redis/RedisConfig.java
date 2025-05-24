@@ -15,6 +15,17 @@ import java.net.UnknownHostException;
 @Configuration
 public class RedisConfig {
 
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        return template;
+    }
+
     /**
      *
      * 如果容器中不存在名为 "redisTemplate" 的 Bean，那么当前的 Bean 就会被自动配置
@@ -26,7 +37,7 @@ public class RedisConfig {
     @ConditionalOnMissingBean(
             name = { "redisTemplate" }
     )
-    public RedisTemplate<String, Serializable> redisTemplate(RedisConnectionFactory connectionFactory){
+    public RedisTemplate<String, Serializable> redisTemplateSerializable(RedisConnectionFactory connectionFactory){
         RedisTemplate<String,Serializable> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer( new StringRedisSerializer());
