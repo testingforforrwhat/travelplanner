@@ -138,9 +138,10 @@ dependencies {
     // 断路器Hystrix（可选）
     // Netflix Hystrix 在 Spring Cloud 2020.0.0 (Ilford) 版本中被移除，因为 Netflix 官方已经停止维护 Hystrix
     // Spring Cloud 推荐使用 Resilience4j 替代 Hystrix
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+    // 如果你的项目必须使用 Hystrix，需要降级到支持的版本
+    // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
     // 断路器（选择一种）
-    // implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     // 或者使用Sentinel
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 
