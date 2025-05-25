@@ -295,10 +295,10 @@ resilience4j:
     instances:
       backendService:
         # 每个周期内允许的请求数
-        limitForPeriod: 10
+        limitForPeriod: 1
         # 刷新周期
-        limitRefreshPeriod: 1s
-        # 获取许可的超时时间
+        limitRefreshPeriod: 10s
+        # 获取许可的超时时间; 立即超时
         timeoutDuration: 0s
 
   # 重试配置 (可选)
