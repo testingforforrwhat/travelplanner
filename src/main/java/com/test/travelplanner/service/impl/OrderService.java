@@ -89,6 +89,9 @@ public class OrderService {
         
         // 发送Kafka消息
         orderEventProducer.sendOrderCreatedEvent(savedOrder);
+
+        // return error > 50%
+        // 触发熔断
         
         return savedOrder;
     }
