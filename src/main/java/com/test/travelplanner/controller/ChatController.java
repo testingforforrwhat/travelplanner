@@ -1,6 +1,8 @@
 package com.test.travelplanner.controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.test.travelplanner.service.impl.DeepSeekService;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
@@ -21,8 +23,13 @@ public class ChatController {
 
     public ChatController(DeepSeekService deepSeekService) {  
         this.deepSeekService = deepSeekService;  
-    }  
+    }
 
+    @SentinelResource(
+            value = "chat",     // 资源名
+            blockHandler = "callLLMBlockHandler",  // 限流降级处理
+            fallback = "callLLMFallback"           // 熔断/异常后降级处理
+    )
     @PostMapping("/chat")  
     public Map<String, String> chat(@RequestBody Map<String, String> request) {  
         String message = request.get("message");  
@@ -31,6 +38,22 @@ public class ChatController {
         Map<String, String> result = new HashMap<>();  
         result.put("response", response);  
         return result;  
+    }
+
+    // 限流、降级 blockHandler
+    public Map<String, String> callLLMBlockHandler(Map<String, String> request, BlockException ex) {
+        Map<String, String> result = new HashMap<>();
+        result.put("response", ex.getMessage());
+        result.put("exception", "LLM系统繁忙，请稍后重试（限流或降级）");
+        return result;
+    }
+
+    // 服务宕机 fallback
+    public Map<String, String> callLLMFallback(Map<String, String> request, Throwable ex) {
+        Map<String, String> result = new HashMap<>();
+        result.put("response", ex.getMessage());
+        result.put("exception", "LLM服务异常，稍后再试");
+        return result;
     }
 
     /**

@@ -145,6 +145,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     // 或者使用Sentinel
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    // Sentinel Dashboard 通信
+    implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.6'
 
     // 测试依赖
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
