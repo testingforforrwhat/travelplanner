@@ -11,6 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * 限流和熔断规则可通过yml配置，但生产建议用dashboard集中推送。
+ *
+ */
 @Configuration
 public class SentinelConfig {
 
