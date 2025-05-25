@@ -106,6 +106,8 @@ public class OrderService {
      */
     public Order createOrderFallback(Long userId, BigDecimal totalAmount, Throwable ex) {
 
+        // 熔断触发降级
+        //
         // 服务降级逻辑
         // 降级策略
         // - 返回默认值：如默认用户信息、空列表
@@ -119,6 +121,15 @@ public class OrderService {
     }
 
     public Order createOrderRateLimitFallback(Long userId, BigDecimal totalAmount, Exception ex) {
+
+        // 限流触发降级
+        //
+        // 服务降级逻辑
+        // 降级策略
+        // - 返回默认值：如默认用户信息、空列表
+        // - 调用备用服务：主库挂了调备库
+        // - 简化功能：关闭非核心功能，保留核心流程
+        // - 缓存数据：返回之前缓存的结果
         Order fallbackOrder = new Order();
         fallbackOrder.setId(-1L);
         fallbackOrder.setStatus("系统繁忙，请稍后重试创建订单");
