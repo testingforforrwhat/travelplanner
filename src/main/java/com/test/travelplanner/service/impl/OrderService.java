@@ -81,6 +81,17 @@ public class OrderService {
         return savedOrder;
     }
 
+    /**
+     *
+     * 参数列表 = 主方法所有参数 + Throwable ex
+     * 返回类型 = 主方法返回类型完全一致
+     * 方法名 = 注解中 fallbackMethod 值完全一致
+     * 
+     * @param userId
+     * @param totalAmount
+     * @param ex
+     * @return
+     */
     public Order createOrderFallback(Long userId, BigDecimal totalAmount, Throwable ex) {
         Order fallbackOrder = new Order();
         fallbackOrder.setId(-1L);
