@@ -57,6 +57,18 @@ public class OrderService {
         return order;
     }
 
+    /**
+     *
+     * 建议同时使用限流和断路器：
+     * - 限流防止流量冲击 ( 控制请求速率，防止本系统过载 )
+     * - 断路器防止故障扩散 ( 错误率达到阈值（如50%）或响应超时,快速失败，防止级联故障，防止依赖系统过载 )
+     * - 两者互补，提供更全面的系统保护
+     *
+     *
+     * @param userId
+     * @param totalAmount
+     * @return
+     */
     @CircuitBreaker(name = "orderService", fallbackMethod = "createOrderFallback")
     @RateLimiter(name = "orderServiceLimiter", fallbackMethod = "createOrderRateLimitFallback")
     @Transactional
@@ -86,7 +98,7 @@ public class OrderService {
      * 参数列表 = 主方法所有参数 + Throwable ex
      * 返回类型 = 主方法返回类型完全一致
      * 方法名 = 注解中 fallbackMethod 值完全一致
-     * 
+     *
      * @param userId
      * @param totalAmount
      * @param ex

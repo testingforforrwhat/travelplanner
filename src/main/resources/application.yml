@@ -285,6 +285,7 @@ resilience4j:
         minimumNumberOfCalls: 5
         # 断路器打开状态持续时间
         waitDurationInOpenState: 10s
+        # 失败率50%触发断路器
         failureRateThreshold: 50
         permittedNumberOfCallsInHalfOpenState: 3
         slowCallRateThreshold: 100
