@@ -289,7 +289,10 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         slowCallRateThreshold: 100
         slowCallDurationThreshold: 60s
-
+      orderService:
+        slidingWindowSize: 20
+        failureRateThreshold: 60
+        waitDurationInOpenState: 15s
   # 限流器配置
   ratelimiter:
     instances:
@@ -300,7 +303,10 @@ resilience4j:
         limitRefreshPeriod: 10s
         # 获取许可的超时时间; 立即超时
         timeoutDuration: 0s
-
+      orderServiceLimiter:
+        limitForPeriod: 1
+        limitRefreshPeriod: 10s
+        timeoutDuration: 1s
   # 重试配置 (可选)
   retry:
     instances:

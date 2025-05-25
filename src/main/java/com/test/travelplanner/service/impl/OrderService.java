@@ -5,6 +5,8 @@ import com.test.travelplanner.kafka.OrderEventProducer;
 import com.test.travelplanner.model.entity.order.Order;
 import com.test.travelplanner.redis.OrderCacheService;
 import com.test.travelplanner.repository.OrderRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +57,8 @@ public class OrderService {
         return order;
     }
 
+    @CircuitBreaker(name = "orderService", fallbackMethod = "createOrderFallback")
+    @RateLimiter(name = "orderServiceLimiter", fallbackMethod = "createOrderRateLimitFallback")
     @Transactional
     public Order createOrder(Long userId, BigDecimal totalAmount) {
         Order order = new Order();
@@ -75,6 +79,14 @@ public class OrderService {
         orderEventProducer.sendOrderCreatedEvent(savedOrder);
         
         return savedOrder;
+    }
+
+    public String createOrderFallback(String orderData, Exception ex) {
+        return "订单服务异常，已记录您的请求，稍后处理";
+    }
+
+    public String createOrderRateLimitFallback(String orderData, Exception ex) {
+        return "系统繁忙，请稍后重试创建订单";
     }
 
     @Transactional
