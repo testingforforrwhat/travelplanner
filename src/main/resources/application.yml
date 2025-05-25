@@ -283,19 +283,25 @@ resilience4j:
         registerHealthIndicator: true
         slidingWindowSize: 10
         minimumNumberOfCalls: 5
+        # 断路器打开状态持续时间
         waitDurationInOpenState: 10s
         failureRateThreshold: 50
         permittedNumberOfCallsInHalfOpenState: 3
         slowCallRateThreshold: 100
         slowCallDurationThreshold: 60s
 
+  # 限流器配置
   ratelimiter:
     instances:
       backendService:
+        # 每个周期内允许的请求数
         limitForPeriod: 10
+        # 刷新周期
         limitRefreshPeriod: 1s
+        # 获取许可的超时时间
         timeoutDuration: 0s
 
+  # 重试配置 (可选)
   retry:
     instances:
       backendService:

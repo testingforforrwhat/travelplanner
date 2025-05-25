@@ -141,7 +141,7 @@ dependencies {
     // 如果你的项目必须使用 Hystrix，需要降级到支持的版本
     // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
     // 断路器（选择一种）
-    // 如果你正在开发新项目或可以进行重构，强烈建议迁移到 Resilience4j
+    // 如果你正在开发新项目或可以进行重构，强烈建议迁移到 Resilience4j -  包含断路器、限流等
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     // 或者使用Sentinel
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'

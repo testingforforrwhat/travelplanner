@@ -31,6 +31,9 @@ public class SMSServiceImpl implements SMSService {
 
     /**
      * 发送短信验证码
+     *
+     * 同时启用断路器和限流，并设置降级方法
+     *
      * @param phone 接收短信验证码的手机号
      * @return 发送短信验证码是否成功
      * */
