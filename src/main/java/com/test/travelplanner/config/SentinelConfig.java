@@ -47,7 +47,7 @@ public class SentinelConfig {
         DegradeRule rule = new DegradeRule();
         rule.setResource("chat");
         rule.setGrade(RuleConstant.DEGRADE_GRADE_RT);           // 按响应时间统计熔断
-        rule.setCount(100);                                     // RT阈值，单位ms（100毫秒）ms
+        rule.setCount(100);                                     // RT阈值，单位ms（100毫秒）ms; 正整数, > 0;
         rule.setTimeWindow(10);                                 // 熔断持续10秒
         rule.setMinRequestAmount(1);                            // 触发熔断最小请求数（建议生产设大一点）
         rule.setSlowRatioThreshold(0.5);                        // 慢调用比＞50%触发熔断
