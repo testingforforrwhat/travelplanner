@@ -105,6 +105,13 @@ public class OrderService {
      * @return
      */
     public Order createOrderFallback(Long userId, BigDecimal totalAmount, Throwable ex) {
+
+        // 服务降级逻辑
+        // 降级策略
+        // - 返回默认值：如默认用户信息、空列表
+        // - 调用备用服务：主库挂了调备库
+        // - 简化功能：关闭非核心功能，保留核心流程
+        // - 缓存数据：返回之前缓存的结果
         Order fallbackOrder = new Order();
         fallbackOrder.setId(-1L);
         fallbackOrder.setStatus("订单服务异常，已记录您的请求，稍后处理");
