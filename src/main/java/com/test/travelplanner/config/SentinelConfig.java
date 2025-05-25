@@ -40,13 +40,17 @@ public class SentinelConfig {
     public void initDegradeRules() {
         List<DegradeRule> rules = new ArrayList<>();
 
+        // 至少需要 1个请求 才开始统计
+        // 当响应时间超过 100ms 的请求占比达到 50% 时触发熔断
+        // 熔断后 10秒 内所有请求直接走降级逻辑
+        // 10秒后进入半开状态，允许少量请求试探
         DegradeRule rule = new DegradeRule();
         rule.setResource("chat");
-        rule.setGrade(RuleConstant.DEGRADE_GRADE_RT);        // 按响应时间熔断
-        rule.setCount(100);                                  // 响应时间超过100ms
-        rule.setTimeWindow(10);                              // 熔断时长10秒
-        rule.setMinRequestAmount(1);                         // 最小请求数
-        rule.setSlowRatioThreshold(0.5);                     // 慢调用比例50%
+        rule.setGrade(RuleConstant.DEGRADE_GRADE_RT);           // 按响应时间统计熔断
+        rule.setCount(100);                                     // RT阈值，单位ms（100毫秒）ms
+        rule.setTimeWindow(10);                                 // 熔断持续10秒
+        rule.setMinRequestAmount(1);                            // 触发熔断最小请求数（建议生产设大一点）
+        rule.setSlowRatioThreshold(0.5);                        // 慢调用比＞50%触发熔断
 
         rules.add(rule);
         DegradeRuleManager.loadRules(rules);
