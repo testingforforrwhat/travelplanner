@@ -37,6 +37,7 @@ public class SMSServiceImpl implements SMSService {
      * @param phone 接收短信验证码的手机号
      * @return 发送短信验证码是否成功
      * */
+    // 组合使用：重试 -> 断路器 -> 限流
     @CircuitBreaker(name = "backendService", fallbackMethod = "fallbackForCircuitBreaker")
     @RateLimiter(name = "backendService", fallbackMethod = "fallbackForRateLimit")
     @Retry(name = "backendService")
@@ -74,13 +75,13 @@ public class SMSServiceImpl implements SMSService {
     // 断路器降级方法
     public String fallbackForCircuitBreaker(String data, Exception ex) {
         log.warn("Circuit breaker fallback for data: {}, reason: {}", data, ex.getMessage());
-        return "Fallback result for circuit breaker: " + data;
+        return "服务暂时不可用，请稍后重试 (断路器降级); Fallback result for circuit breaker: " + data;
     }
 
     // 限流降级方法
     public String fallbackForRateLimit(String data, Exception ex) {
         log.warn("Rate limiter fallback for data: {}, reason: {}", data, ex.getMessage());
-        return "Rate limit exceeded, please try again later: " + data;
+        return "请求过于频繁，请稍后重试 (限流降级); Rate limit exceeded, please try again later: " + data;
     }
 
 }
