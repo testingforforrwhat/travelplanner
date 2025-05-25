@@ -275,6 +275,35 @@ spring:
       properties:
         spring.json.trusted.packages: com.example.orderservice.dto,com.example.orderservice.event
 
+# Resilience4j 配置
+resilience4j:
+  circuitbreaker:
+    instances:
+      backendService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 60s
+
+  ratelimiter:
+    instances:
+      backendService:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+
+  retry:
+    instances:
+      backendService:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+
 logging:
   level:
     org.apache.coyote.http11.Http11InputBuffer: TRACE # Incoming http requests

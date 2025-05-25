@@ -7,6 +7,10 @@ import com.aliyun.teautil.models.RuntimeOptions;
 import com.test.travelplanner.config.AliSMSClient;
 import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.service.SMSService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,6 +19,7 @@ import javax.annotation.Resource;
  * 短信模块 业务逻辑层 实现类
  * */
 @Service
+@Slf4j
 public class SMSServiceImpl implements SMSService {
 
     // 依赖项
@@ -29,6 +34,9 @@ public class SMSServiceImpl implements SMSService {
      * @param phone 接收短信验证码的手机号
      * @return 发送短信验证码是否成功
      * */
+    @CircuitBreaker(name = "backendService", fallbackMethod = "fallbackForCircuitBreaker")
+    @RateLimiter(name = "backendService", fallbackMethod = "fallbackForRateLimit")
+    @Retry(name = "backendService")
     @Override
     public boolean sendValidateSMS(String phone) {
         // 生成 六位数的随机验证码 [ 100000 , 999999 ]
@@ -59,4 +67,17 @@ public class SMSServiceImpl implements SMSService {
             return false;
         }
     }
+
+    // 断路器降级方法
+    public String fallbackForCircuitBreaker(String data, Exception ex) {
+        log.warn("Circuit breaker fallback for data: {}, reason: {}", data, ex.getMessage());
+        return "Fallback result for circuit breaker: " + data;
+    }
+
+    // 限流降级方法
+    public String fallbackForRateLimit(String data, Exception ex) {
+        log.warn("Rate limiter fallback for data: {}, reason: {}", data, ex.getMessage());
+        return "Rate limit exceeded, please try again later: " + data;
+    }
+
 }
