@@ -2,6 +2,7 @@ package com.test.travelplanner.controller;
 
 
 import com.test.travelplanner.model.entity.order.Order;
+import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.service.impl.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,12 @@ import java.util.Map;
 public class OrderController {
 
     private final OrderService orderService;
+    private final RedisUtil redisUtil;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, RedisUtil redisUtil) {
         this.orderService = orderService;
+        this.redisUtil = redisUtil;
     }
 
     @GetMapping
@@ -46,12 +49,17 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Order> createOrder(
+            @RequestHeader String authorization,
+            @RequestBody Map<String, Object> request) {
+        if( redisUtil.hashKey( authorization ) ){
         Long userId = Long.valueOf(request.get("userId").toString());
         BigDecimal totalAmount = new BigDecimal(request.get("totalAmount").toString());
         
         Order createdOrder = orderService.createOrder(userId, totalAmount);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
     }
 
     @PutMapping("/{orderNumber}/status")
