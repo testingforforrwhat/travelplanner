@@ -81,6 +81,18 @@ public class OrderService {
         return savedOrder;
     }
 
+    public Order createOrderFallback(Long userId, BigDecimal totalAmount, Throwable ex) {
+        Order fallbackOrder = new Order();
+        fallbackOrder.setStatus("订单服务异常，已记录您的请求，稍后处理");
+        return fallbackOrder;
+    }
+
+    public Order createOrderRateLimitFallback(Long userId, BigDecimal totalAmount, Exception ex) {
+        Order fallbackOrder = new Order();
+        fallbackOrder.setStatus("系统繁忙，请稍后重试创建订单");
+        return fallbackOrder;
+    }
+
     public String createOrderFallback(String orderData, Exception ex) {
         return "订单服务异常，已记录您的请求，稍后处理";
     }
